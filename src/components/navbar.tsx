@@ -13,6 +13,7 @@ const chxUser = [
     { name: ' Se connecter', href: '/ConnecterUser', icon: 'fa-solid fa-lock' },
     { name: " S'enregistrer", href: '/InscrireUser', icon: 'fa-solid fa-circle-user'},
     { name: ' Mon profil', href: '/ProfilUser', icon: 'fa-solid fa-id-card' },
+    { name: ' Mon association', href: '/Association?id=2', icon: 'fa-solid fa-id-card'},
   ];
 
 

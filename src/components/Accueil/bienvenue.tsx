@@ -3,7 +3,7 @@ import Link from "next/link";
 export default function Bienvenue() {
     return (
         <>
-            <section className="bienvenue double">
+            <section className="bienvenue">
                 <h1 className="container">Bienvenue sur le site officiel du Ministère des Solidarités et de la Santé</h1>
 
                 <div className="container content">

@@ -331,6 +331,110 @@ section {
       padding: 30px; }
 }
 
+
+/* Mise en page de la section RESSOURCE */
+.ressource-titre {
+  display: grid;
+  grid-template-columns: 60% 40%;
+  gap: 5px; }
+.ressource-info {
+  display: grid;
+  grid-template-columns: 60% 40%;
+  gap: 20px;
+  padding-top: 25px; }
+.ressource-commentaire {
+  margin-top: 50px;
+  padding-top: 50px;
+  border-top: 1px solid #ddd; }
+
+  .myress {
+    padding: 0px;
+    background-color: #f7f7f7; }
+    .myress h1 {
+      font-weight: 900;
+      padding: 0;
+      margin: 0;
+      font-variant-caps: small-caps;
+      font-size: 1.8em; }
+    .myress h3 {
+      font-weight: 600;
+      padding: 0 0 15px 0;
+      color: #414141;
+      font-size: 1.4em; }
+    .myress .description {
+      font-size: 1em; }
+    .myress .date {
+      font-weight: 600;
+      padding: 0 0 5px 0;
+      margin: 0;
+      font-size: 1em; }
+      .myress .donnee-date {
+        padding: 0;
+        margin: 0;
+        text-transform: capitalize;
+        font-size: 0.9em;
+        padding-bottom: 20px; }
+
+
+    .myress .image-ressource {
+      padding-top: 20px;
+      padding-bottom: 25px; }
+      .myress .image-ressource img {
+        width: 100%; 
+        height: 300px; 
+        object-fit: cover;
+        display: block; 
+        margin: 0 auto; }
+
+    .myress .favoris {
+      text-decoration: none;
+      border-radius: 30px;
+      background-color: #DAE6FD;
+      border: #DAE6FD;
+      color: #666;
+      font-size: 0.7em;
+      float: right;
+      padding: 5px 15px; }
+      .myress .favoris:hover {
+        background-color: var(--bleu-gouv);
+        color: #fff; }
+    
+    .myress .association {
+      background-color: #f7f7f7;
+      padding-top: 20px; }
+      .myress .association .imageAssociation {
+        height: 80px;
+        width: auto; }
+      .myress .association h2 {
+        font-size: 1.2em;
+        font-weight: 800;
+        text-decoration: underline #f7f7f7;
+        color: #666;
+        padding: 15px 0 25px 0; }
+        .myress .association h2:hover {
+          text-decoration: underline #f7f7f7; }
+      
+
+@media screen and (max-width: 990px) {
+  .ressource-titre,
+  .ressource-info {
+    grid-template-columns: 100%; }
+  .btn-favoris {place-self: center;}
+  .myress h1 {
+    text-align: center;
+    padding-bottom: 10px;
+  }
+}
+@media (max-width: 600px) {
+  .bienvenue .container .myress {padding: 0px;}
+  .bienvenue .ressource-titre {
+    justify-items: center; }
+  .btn-favoris {place-self: center;}
+
+}
+
+
+
 /* Mise en page de la barre de recherche et de triage */
 .search {
   background-color: #f1f1f1;
@@ -389,8 +493,8 @@ section {
   .carte .logo-asso img {
     display: inline-block;
     padding: 5px;
-    width: 100px;
-    height: auto;
+    width: auto;
+    height: 80px;
     border: 1px solid #ddd; }
   .carte .image-ressource img {
     width: 100%;
@@ -438,6 +542,15 @@ section {
       color: var(--bleu-gouv); }
       .carte-body .card-info a:hover {
         border-bottom: 1px solid var(--bleu-gouv); }
+    .carte-body .card-info .date {
+      text-transform: capitalize; }
+  .carte-date {
+    text-align: left;
+    padding: 0 0 0 15px;
+    color: #999;
+    font-size: 0.8em;
+    font-style: italic;
+    padding-bottom: 9px; }
 
 
 /* Mise en page des formulaires */
@@ -621,6 +734,19 @@ section {
     padding: 0 0 15px 0;
     color:#414141;
     font-size: 1.5em; }
+  .infoasso .titre-ressource {
+    display: flex;
+    justify-content: space-between; }
+    .infoasso .titre-ressource .addRessource {
+      text-decoration: none;
+      color: var(--bleu-gouv);
+      font-size: 1.2em;
+      font-weight: bolder; }
+      .infoasso .titre-ressource .addRessource i {
+        font-weight: bold;
+        font-size: x-large; }
+  .infoasso .col {
+    flex-basis: auto; }
 
 .membre-asso {
   display: inline-block;
