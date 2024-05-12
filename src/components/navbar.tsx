@@ -5,33 +5,48 @@ import logoMinistere from '@/public/logoMinistere.png'
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useState } from 'react';
+import {useEffect, useState} from 'react';
 import clsx from 'clsx';
-
-// Liste des liens a afficher pour les utilisateurs.
-const chxUser = [
-    { name: ' Se connecter', href: '/ConnecterUser', icon: 'fa-solid fa-lock' },
-    { name: " S'enregistrer", href: '/InscrireUser', icon: 'fa-solid fa-circle-user'},
-    { name: ' Mon profil', href: '/ProfilUser', icon: 'fa-solid fa-id-card' },
-    { name: ' Mon association', href: '/Association?id=2', icon: 'fa-solid fa-id-card'},
-  ];
-
-
-// Liste des liens a afficher dans le menu.
-const chxMenu = [
-    { name: ' Accueil', href: '/', icon: 'fa-solid fa-house' },
-    { name: ' Associations', href: '/ListeAssociations', icon: 'fa-solid fa-people-arrows'},
-    { name: ' Ressources', href: '/ListeRessources', icon: 'fa-solid fa-puzzle-piece' },
-  ];
+import {useSelector} from "react-redux";
+import {RootState} from "@/store";
 
 
 export default function Navbar() {
+    const token = useSelector((state: RootState) => state.token.token)
     const pathname = usePathname();
+
+    const [menuUser, setMenuUser] = useState([
+        { name: ' Se connecter', href: '/ConnecterUser', icon: 'fa-solid fa-lock' },
+        { name: " S'enregistrer", href: '/InscrireUser', icon: 'fa-solid fa-circle-user'},
+    ])
+
     const [menuOpen, setMenuOpen] = useState(false);
-    
-        const toggleMenu = () => {
-            setMenuOpen(!menuOpen);
-        };
+
+    useEffect(() => {
+        if (token) {
+            setMenuUser([
+                { name: ' Mon profil', href: '/ProfilUser', icon: 'fa-solid fa-id-card' },
+                { name: ' Mon association', href: '/Association?id=2', icon: 'fa-solid fa-id-card'},
+            ])
+        } else {
+            setMenuUser([
+                { name: ' Se connecter', href: '/ConnecterUser', icon: 'fa-solid fa-lock' },
+                { name: " S'enregistrer", href: '/InscrireUser', icon: 'fa-solid fa-circle-user'},
+            ])
+        }
+    }, [token])
+
+
+    // Liste des liens a afficher dans le menu.
+    const chxMenu = [
+        { name: ' Accueil', href: '/', icon: 'fa-solid fa-house' },
+        { name: ' Associations', href: '/ListeAssociations', icon: 'fa-solid fa-people-arrows'},
+        { name: ' Ressources', href: '/ListeRessources', icon: 'fa-solid fa-puzzle-piece' },
+    ];
+
+    const toggleMenu = () => {
+        setMenuOpen(!menuOpen);
+    };
 
     
     return (
@@ -46,7 +61,7 @@ export default function Navbar() {
                             <i className="fa fa-bars"></i>
                         </a>
                         <ul className="connexion menu">
-                            {chxUser.map((chUser) => {
+                            {menuUser.map((chUser) => {
                                 return (
                                     <>
                                         <li>                                     
@@ -93,7 +108,7 @@ export default function Navbar() {
                             <div className="">
                                 <div className="container menu-top">
                                     <ul className="connexion">
-                                    {chxUser.map((chUser) => {
+                                    {menuUser.map((chUser) => {
                                             return (
                                                 <>
                                                     <li>                                     

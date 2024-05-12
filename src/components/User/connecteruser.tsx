@@ -1,10 +1,39 @@
 // Appel des fichiers de styles
+"use client"
 import '@/styles/bootstrap.min.css'
 import '@/styles/globals.css'
 
 import Link from "next/link"
+import { useState} from "react";
+import {useDispatch} from "react-redux";
+import {userLogin} from "@/lib/auth/user.auth";
+import {setToken} from "@/store/tokenSlice";
 
 export default function ConnecterUser() {
+    const dispatch = useDispatch()
+
+    const [state, setState] = useState({
+        email: '',
+        password: ''
+    })
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        e.preventDefault()
+        setState({
+            ...state,
+            [e.target.name]: e.target.value
+        })
+    }
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        console.log(state.email, state.password)
+        const res = await userLogin(state)
+        if (res) {
+            dispatch(setToken(res.data.token))
+        }
+    }
+
     return (
         <>
             <section className="formulaire">
@@ -15,14 +44,14 @@ export default function ConnecterUser() {
                         <h2>Se connecter</h2>
                         <p className="infoform">Les champs précédés d'une étoile (*) sont obligatoires.</p>
 
-                        <form action="" method="post">
+                        <form onSubmit={handleSubmit}>
                             <div className="form-group">
                                 <label htmlFor="email">Adresse email *</label>
-                                <input type="email" title="email" name="email" className="input" required />
+                                <input type="email" title="email" name="email" className="input" value={state.email} onChange={handleChange} required />
                             </div>
                             <div className="form-group">
                                 <label htmlFor="password">Mot de passe *</label>
-                                <input type="password" title="password" name="password" className="input" required />
+                                <input type="password" title="password" name="password" className="input" value={state.password} onChange={handleChange} required />
                                 <p className="infoform complform">Vous avez oublié votre mot de passe ? <Link href="">Réinitialiez-le.</Link></p>
                             </div>
                             <div className="form-group condition">
