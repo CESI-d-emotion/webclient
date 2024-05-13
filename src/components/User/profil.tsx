@@ -1,4 +1,19 @@
+import {useState} from "react";
+import {User} from "@/lib/entities/user.entity";
+import {getUserInfo} from "@/lib/user/user.service";
+import {useSelector} from "react-redux";
+import {RootState} from "@/store";
+
+export async function getStaticProps() {
+    const token = useSelector((state: RootState) => state.token.token)
+    const res = await getUserInfo(token as string)
+}
+
 export default function MonProfil() {
+    const [user, setUser] = useState<User | null>(null);
+
+
+
     return (
         <>
             <section className="profil">

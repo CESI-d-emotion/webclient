@@ -27,7 +27,6 @@ export default function ConnecterUser() {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        console.log(state.email, state.password)
         const res = await userLogin(state)
         if (res) {
             dispatch(setToken(res.data.token))

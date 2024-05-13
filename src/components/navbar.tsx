@@ -13,7 +13,7 @@ import {RootState} from "@/store";
 
 export default function Navbar() {
     const token = useSelector((state: RootState) => state.token.token)
-    const pathname = usePathname();
+    const pathname = usePathname()
 
     const [menuUser, setMenuUser] = useState([
         { name: ' Se connecter', href: '/ConnecterUser', icon: 'fa-solid fa-lock' },
