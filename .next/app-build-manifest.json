@@ -1,9 +1,9 @@
 {
   "pages": {
-    "/page": [
+    "/ListeRessources/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/page.js"
+      "static/chunks/app/ListeRessources/page.js"
     ],
     "/layout": [
       "static/chunks/webpack.js",
@@ -11,55 +11,15 @@
       "static/css/app/layout.css",
       "static/chunks/app/layout.js"
     ],
-    "/InscrireUser/page": [
+    "/ProfilUser/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/InscrireUser/page.js"
-    ],
-    "/ConnecterUser/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/ConnecterUser/page.js"
-    ],
-    "/InscrireAsso/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/InscrireAsso/page.js"
-    ],
-    "/ConnecterAsso/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/ConnecterAsso/page.js"
-    ],
-    "/Association/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/Association/page.js"
-    ],
-    "/AjouterRessource/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/AjouterRessource/page.js"
+      "static/chunks/app/ProfilUser/page.js"
     ],
     "/Ressource/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/Ressource/page.js"
-    ],
-    "/ListeAssociations/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/ListeAssociations/page.js"
-    ],
-    "/ListeRessources/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/ListeRessources/page.js"
-    ],
-    "/ProfilUser/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/ProfilUser/page.js"
     ],
     "/_not-found/page": [
       "static/chunks/webpack.js",

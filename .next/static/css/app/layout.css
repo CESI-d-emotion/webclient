@@ -7696,11 +7696,99 @@ section {
   grid-template-columns: 60% 40%;
   gap: 20px;
   padding-top: 25px; }
+
 .ressource-commentaire {
   margin-top: 50px;
   padding-top: 50px;
   border-top: 1px solid #ddd; }
-
+  .ressource-commentaire .title {
+    font-weight: 600;
+    color: #414141;
+    font-size: 1.4em; }
+  .ressource-commentaire .commentaire,
+  .ressource-commentaire .reponse {
+    border: 1px solid #ddd;
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 10px; }
+  .ressource-commentaire .commentaire {
+    margin-top: 25px; }
+    .ressource-commentaire .commentaire h3 {
+      font-weight: 600;
+      color: #414141;
+      font-size: 1em; }
+  .ressource-commentaire .reponse {
+    margin-left: 20px; }
+  .ressource-commentaire .reponse-input {
+        background-color: var(--bleu-gouv);
+        color: #fff;
+        padding: 6px 25px;
+        border-radius: 50px;
+        text-decoration: none;
+        font-size: 0.8em; }
+    .ressource-commentaire .commentaire .form-commentaire-input,
+    .ressource-commentaire .commentaire .form-commentaire-comment {
+      padding: .25rem 1rem !important;
+      font-size: 0.95em;
+      line-height: 2;
+      width: 100%;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      margin: 10px 0; }
+    .ressource-commentaire .commentaire .form-commentaire-comment {
+      margin: 0; }
+    .ressource-commentaire .commentaire .commentaire-likes-titres,
+    .ressource-commentaire .titre-reponse {
+      border-bottom: 1px solid #ddd;
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px; }
+    .ressource-commentaire .titre-reponse {
+      flex-direction: column; }
+      .commentaire-likes-titres button {
+        width: 30px;
+        background: transparent;
+        font-weight: bold;
+        color: var(--bleu-gouv); }
+      .titre-commentaire .auteur,
+      .titre-reponse .auteur {
+        font-size: 1em;
+        font-weight: 600;
+        padding-bottom: 0px;
+        margin-bottom: 1px; }
+      .titre-commentaire .date,
+      .titre-reponse .date {
+        font-size: 0.8em;
+        color: grey;
+        font-style: italic; }
+      .reponse .comment {
+        padding: 0;
+        margin: 0;
+        margin-bottom: 0px; }
+    .ressource-commentaire .commentaire .commentaire-repondre {
+      text-decoration: none;
+      border-radius: 30px;
+      cursor: pointer;
+      background-color: #DAE6FD;
+      border: #DAE6FD;
+      color: #666;
+      margin-bottom: 5px;
+      font-size: 0.7em;
+      padding: 5px 15px; }
+      .commentaire-repondre:hover {
+        background-color: var(--bleu-gouv);
+        color: #fff; }
+  .ressource-commentaire .ajout-commentaire {
+    text-decoration: none;
+    border-radius: 30px;
+    cursor: pointer;
+    background-color: var(--bleu-gouv);
+    border: #DAE6FD;
+    color: #fff;
+    margin-bottom: 10px;
+    font-size: 0.7em;
+    padding: 5px 15px; }
+    
   .myress {
     padding: 0px;
     background-color: #f7f7f7; }
@@ -7728,7 +7816,6 @@ section {
         text-transform: capitalize;
         font-size: 0.9em;
         padding-bottom: 20px; }
-
 
     .myress .image-ressource {
       padding-top: 20px;
