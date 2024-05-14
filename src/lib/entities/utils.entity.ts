@@ -1,10 +1,15 @@
 export interface Region {
-    id: number,
-    name: string,
-    nutsCode: string
+  id: number
+  name: string
+  nutsCode: string
 }
 
 export interface UserRole {
-    id: number,
-    libelle: string
+  id: number
+  libelle: string
+}
+
+export interface ApiResponse<T> {
+  code: number
+  data: T
 }

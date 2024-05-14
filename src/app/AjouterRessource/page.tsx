@@ -1,9 +1,9 @@
-import AjoutRessource from "@/components/Ressources/ajoutressource";
+import AjoutRessource from '@/components/Ressources/ajoutressource'
 
 export default function Page() {
   return (
     <>
-      <AjoutRessource/>
+      <AjoutRessource />
     </>
-    );
-  }
+  )
+}
