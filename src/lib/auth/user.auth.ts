@@ -32,16 +32,16 @@ export async function userLogin(input: {
 }
 
 interface UserRegisterInput {
-  firstName: string,
-  lastName: string,
-  email: string,
-  password: string,
-  passwordConfirmation: string,
+  firstName: string
+  lastName: string
+  email: string
+  password: string
+  passwordConfirmation: string
   regionId: string | number
 }
 interface AuthResponse {
-  token: string,
-  identity: 'isuser' | 'isassociation',
+  token: string
+  identity: 'isuser' | 'isassociation'
   message: string
 }
 export async function userRegister(input: UserRegisterInput): Promise<{
@@ -52,7 +52,10 @@ export async function userRegister(input: UserRegisterInput): Promise<{
   input.regionId = parseInt(input.regionId as string)
 
   // Request
-  const res = await axios.post<ApiResponse<AuthResponse>>(API_URL + '/users/signup', input)
+  const res = await axios.post<ApiResponse<AuthResponse>>(
+    API_URL + '/users/signup',
+    input
+  )
   if (res.data && res.data.data && res.data.data.token) {
     setCookie('auth-token', res.data.data.token, 1)
     setCookie('auth-identity', res.data.data.identity, 1)

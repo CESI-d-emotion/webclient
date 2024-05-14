@@ -87,12 +87,12 @@ export default function Navbar() {
   }
 
   const handleSignoff = () => {
-    dispatch(resetToken({token: null, identity: null}))
+    dispatch(resetToken({ token: null, identity: null }))
     // Remove cookies
-    unsetCookie("auth-token")
-    unsetCookie("auth-identity")
+    unsetCookie('auth-token')
+    unsetCookie('auth-identity')
     // checkAndSetAuthFromCookie()
-    toast.success("Au revoir")
+    toast.success('Au revoir')
   }
 
   return (
@@ -124,7 +124,8 @@ export default function Navbar() {
                           active: pathname === chUser.href
                         })}
                       >
-                        <i className={chUser.icon}></i>{chUser.name}
+                        <i className={chUser.icon}></i>
+                        {chUser.name}
                       </Link>
                     </li>
                   </>
@@ -132,7 +133,9 @@ export default function Navbar() {
               })}
               {token.token && (
                 <li>
-                  <button className="submit-btn" onClick={handleSignoff}>Deconnexion</button>
+                  <button className="submit-btn" onClick={handleSignoff}>
+                    Deconnexion
+                  </button>
                 </li>
               )}
             </ul>
@@ -179,7 +182,8 @@ export default function Navbar() {
                                 active: pathname === chUser.href
                               })}
                             >
-                              <i className={chUser.icon}></i>{chUser.name}
+                              <i className={chUser.icon}></i>
+                              {chUser.name}
                             </Link>
                           </li>
                         </>
@@ -187,7 +191,9 @@ export default function Navbar() {
                     })}
                     {token.token && (
                       <li>
-                        <button className="submit-btn" onClick={handleSignoff}>Deconnexion</button>
+                        <button className="submit-btn" onClick={handleSignoff}>
+                          Deconnexion
+                        </button>
                       </li>
                     )}
                   </ul>
