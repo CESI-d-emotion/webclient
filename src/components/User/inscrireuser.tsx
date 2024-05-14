@@ -54,8 +54,8 @@ export default function InscriptionUser() {
     e.preventDefault()
     const res = await userRegister(formState)
     if (res.data) {
-      toast.success('Votre inscription est un succes')
-      dispatch(setToken({ token: res.data.token, identity: res.data.identity }))
+      toast.success("Votre inscription est un succes")
+      dispatch(setToken({token: res.data.token, identity: res.data.identity, role: res.data.role}))
     }
   }
 
@@ -63,11 +63,11 @@ export default function InscriptionUser() {
     <>
       <section className="formulaire">
         <div className="container">
+
           <div className="form">
+
             <h2>Inscription</h2>
-            <p className="infoform">
-              Les champs précédés d'une étoile (*) sont obligatoires.
-            </p>
+                        <p className="infoform">Les champs précédés d'une étoile (*) sont obligatoires.</p>
 
             <form onSubmit={handleSubmit}>
               <div className="form-group">
@@ -140,11 +140,11 @@ export default function InscriptionUser() {
                   onChange={handleChangeSelect}
                 >
                   <option value="">Selectionner...</option>
-                  {options.map(option => (
-                    <option key={option.id} value={option.id}>
-                      {option.name}
-                    </option>
-                  ))}
+                  {
+                    options.map(option => (
+                      <option key={option.id} value={option.id}>{option.name}</option>
+                    ))
+                  }
                 </select>
               </div>
               <div className="form-group condition">
@@ -167,9 +167,12 @@ export default function InscriptionUser() {
 
             <p className="infoform complform">Vous avez déjà un compte ?</p>
             <Link href="ConnecterUser">Connectez-vous.</Link>
+
           </div>
+
         </div>
       </section>
     </>
   )
 }
+

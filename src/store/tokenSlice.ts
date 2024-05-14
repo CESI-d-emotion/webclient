@@ -2,12 +2,14 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 interface TokenState {
   token: string | null
-  identity: 'isuser' | 'isassociation' | null
+  identity: 'isuser' | 'isassociation' | null,
+  role: number | null
 }
 
 const initialState: TokenState = {
   token: null,
-  identity: null
+  identity: null,
+  role: null
 }
 
 const tokenSlice = createSlice({
@@ -18,11 +20,13 @@ const tokenSlice = createSlice({
       state,
       action: PayloadAction<{
         token: string
-        identity: 'isuser' | 'isassociation'
+        identity: 'isuser' | 'isassociation',
+        role: number
       }>
     ) {
       state.token = action.payload.token
       state.identity = action.payload.identity
+      state.role = action.payload.role
     },
     resetToken(state, action: PayloadAction<typeof initialState>) {
       state = initialState

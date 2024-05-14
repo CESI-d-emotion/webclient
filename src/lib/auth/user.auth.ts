@@ -45,7 +45,7 @@ interface AuthResponse {
   message: string
 }
 export async function userRegister(input: UserRegisterInput): Promise<{
-  data: { token: string; identity: 'isuser' | 'isassociation'; message: string }
+  data: { token: string; identity: 'isuser' | 'isassociation'; role: number; message: string }
   code: number
 }> {
   // Verification

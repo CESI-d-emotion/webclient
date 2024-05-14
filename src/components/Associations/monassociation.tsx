@@ -20,7 +20,7 @@ export default function MonAssociation() {
 
   // Affichage seulement de l'onglet actif
   useEffect(() => {
-    document.getElementById('defaultOpen').click()
+    document.getElementById('defaultOpen')?.click()
   }, [])
 
   // Fonction pour ouvrir un onglet
