@@ -1,8 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { storeEncryptedData } from '@/lib/helpers/data.encrypt'
 
 interface TokenState {
   token: string | null
-  identity: 'isuser' | 'isassociation' | null,
+  identity: 'isuser' | 'isassociation' | null
   role: number | null
 }
 
@@ -20,16 +21,18 @@ const tokenSlice = createSlice({
       state,
       action: PayloadAction<{
         token: string
-        identity: 'isuser' | 'isassociation',
+        identity: 'isuser' | 'isassociation'
         role: number
       }>
     ) {
       state.token = action.payload.token
       state.identity = action.payload.identity
       state.role = action.payload.role
+      storeEncryptedData('auth-info', { ...action.payload })
     },
     resetToken(state, action: PayloadAction<typeof initialState>) {
       state = initialState
+      localStorage.removeItem('auth-info')
     }
   }
 })

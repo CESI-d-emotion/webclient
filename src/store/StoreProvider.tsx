@@ -12,11 +12,16 @@ export default function StoreProvider({ children }: { children: ReactNode }) {
   }, [])
 
   const checkIfUserAuthHandler = async () => {
-    const token = checkAndSetAuthFromCookie()
-    if (token) {
-      const user = await getUserInfo(token.token as string)
-      if (!user) return
-      store.dispatch(setToken({...token, role: user.userRoleId as number}))
+    const data = await checkAndSetAuthFromCookie()
+    if (data) {
+      console.log(data)
+      store.dispatch(
+        setToken({
+          token: data.token as string,
+          identity: data.identity as 'isuser' | 'isassociation',
+          role: data.role as number
+        })
+      )
     }
   }
   return <Provider store={store}>{children}</Provider>

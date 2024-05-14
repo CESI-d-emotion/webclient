@@ -6,7 +6,7 @@ import Bienvenue from '@/components/Accueil/bienvenue'
 export default function Page() {
   return (
     <>
-      {/*<Bienvenue />*/}
+      <Bienvenue />
       <AccueilAssociations />
       <AccueilRessources />
       <AccueilStats />

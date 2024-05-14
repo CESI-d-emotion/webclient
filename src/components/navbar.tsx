@@ -10,7 +10,6 @@ import clsx from 'clsx'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '@/store'
 import { resetToken, setToken } from '@/store/tokenSlice'
-import { checkAndSetAuthFromCookie, unsetCookie } from '@/lib/helpers/cookies'
 import { toast } from 'react-toastify'
 
 export default function Navbar() {
@@ -87,11 +86,7 @@ export default function Navbar() {
   }
 
   const handleSignoff = () => {
-    dispatch(resetToken({ token: null, identity: null }))
-    // Remove cookies
-    unsetCookie('auth-token')
-    unsetCookie('auth-identity')
-    // checkAndSetAuthFromCookie()
+    dispatch(resetToken({ token: null, identity: null, role: null }))
     toast.success('Au revoir')
   }
 
