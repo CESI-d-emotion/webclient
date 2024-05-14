@@ -1,7 +1,79 @@
-import Image from 'next/image'
+'use client'
+
 import Link from 'next/link'
+import { useEffect, useState } from 'react'
+import { fetchRegion } from '@/lib/utils/utils.service'
+import { useDispatch } from 'react-redux'
+import { Region } from '@/lib/entities/utils.entity'
+import { toast } from 'react-toastify'
+import { setToken } from '@/store/tokenSlice'
+import { associationRegister } from '@/lib/auth/association.auth'
 
 export default function InscriptionAsso() {
+  const dispatch = useDispatch()
+
+  const [options, setOptions] = useState<Region[]>([])
+  const [formState, setFormState] = useState({
+    name: '',
+    description: '',
+    email: '',
+    rna: '',
+    password: '',
+    passwordConfirmation: '',
+    regionId: 0
+  })
+
+  useEffect(() => {
+    fetchRegionHandler()
+  }, [])
+
+  const fetchRegionHandler = async () => {
+    const res = await fetchRegion()
+    if (res.data) {
+      setOptions(res.data)
+    }
+  }
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault()
+    setFormState({
+      ...formState,
+      [e.target.name]: e.target.value
+    })
+  }
+
+  const handleChangeTextArea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    e.preventDefault()
+    setFormState({
+      ...formState,
+      [e.target.name]: e.target.value
+    })
+  }
+
+  const handleChangeSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    e.preventDefault()
+    console.log(e.target.value)
+    setFormState({
+      ...formState,
+      [e.target.name]: e.target.value
+    })
+  }
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    const res = await associationRegister(formState)
+    if (res.data) {
+      toast.success('Votre inscription est un succes')
+      dispatch(
+        setToken({
+          token: res.data.token as string,
+          identity: res.data.identity as 'isuser' | 'isassociation',
+          role: 3
+        })
+      )
+    }
+  }
+
   return (
     <>
       <section className="formulaire">
@@ -12,14 +84,16 @@ export default function InscriptionAsso() {
               Les champs précédés d'une étoile (*) sont obligatoires.
             </p>
 
-            <form action="" method="post">
+            <form onSubmit={handleSubmit}>
               <div className="form-group">
                 <label htmlFor="nom">Nom de l'association *</label>
                 <input
                   type="text"
                   title="nom"
-                  name="nom"
+                  name="name"
                   className="input"
+                  value={formState.name}
+                  onChange={handleChange}
                   required
                 />
               </div>
@@ -28,8 +102,10 @@ export default function InscriptionAsso() {
                 <input
                   type="text"
                   title="nbcerfa"
-                  name="nbcerfa"
+                  name="rna"
                   className="input"
+                  value={formState.rna}
+                  onChange={handleChange}
                   required
                 />
               </div>
@@ -40,6 +116,8 @@ export default function InscriptionAsso() {
                   title="email"
                   name="email"
                   className="input"
+                  value={formState.email}
+                  onChange={handleChange}
                   required
                 />
               </div>
@@ -48,9 +126,11 @@ export default function InscriptionAsso() {
                 <textarea
                   title="description"
                   name="description"
-                  cols="20"
-                  rows="5"
+                  cols={20}
+                  rows={5}
                   className="textarea"
+                  value={formState.description}
+                  onChange={handleChangeTextArea}
                   required
                 ></textarea>
               </div>
@@ -61,6 +141,8 @@ export default function InscriptionAsso() {
                   title="password"
                   name="password"
                   className="input"
+                  value={formState.password}
+                  onChange={handleChange}
                   required
                 />
               </div>
@@ -71,10 +153,27 @@ export default function InscriptionAsso() {
                 <input
                   type="password"
                   title="conf_password"
-                  name="conf_password"
+                  name="passwordConfirmation"
                   className="input"
+                  value={formState.passwordConfirmation}
+                  onChange={handleChange}
                   required
                 />
+              </div>
+              <div className="form-group">
+                <label htmlFor="select_region">Region</label>
+                <select
+                  name="regionId"
+                  value={formState.regionId}
+                  onChange={handleChangeSelect}
+                >
+                  <option value="">Selectionner...</option>
+                  {options.map(option => (
+                    <option key={option.id} value={option.id}>
+                      {option.name}
+                    </option>
+                  ))}
+                </select>
               </div>
               <div className="form-group condition">
                 <div className="conditon">

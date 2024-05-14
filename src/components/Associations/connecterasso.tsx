@@ -1,7 +1,40 @@
-import Image from 'next/image'
+'use client'
+
 import Link from 'next/link'
+import { useDispatch } from 'react-redux'
+import { useState } from 'react'
+import { toast } from 'react-toastify'
+import { setToken } from '@/store/tokenSlice'
+import { associationLogin } from '@/lib/auth/association.auth'
 
 export default function ConnectAsso() {
+  const dispatch = useDispatch()
+  const [state, setState] = useState({ email: '', password: '' })
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault()
+    setState({
+      ...state,
+      [e.target.name]: e.target.value
+    })
+  }
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    const res = await associationLogin(state)
+    if (res.data) {
+      dispatch(
+        setToken({
+          token: res.data.token,
+          identity: res.data.identity,
+          role: 3
+        })
+      )
+      toast.success('Bienvenue')
+
+    }
+  }
+
   return (
     <>
       <section className="formulaire">
@@ -12,7 +45,7 @@ export default function ConnectAsso() {
               Les champs précédés d'une étoile (*) sont obligatoires.
             </p>
 
-            <form action="" method="post">
+            <form onSubmit={handleSubmit}>
               <div className="form-group">
                 <label htmlFor="email">Adresse email *</label>
                 <input
@@ -20,6 +53,8 @@ export default function ConnectAsso() {
                   title="email"
                   name="email"
                   className="input"
+                  value={state.email}
+                  onChange={handleChange}
                   required
                 />
               </div>
@@ -30,6 +65,8 @@ export default function ConnectAsso() {
                   title="password"
                   name="password"
                   className="input"
+                  value={state.password}
+                  onChange={handleChange}
                   required
                 />
                 <p className="infoform complform">

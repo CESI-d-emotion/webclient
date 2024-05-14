@@ -10,17 +10,62 @@ import { parseISO, format } from 'date-fns'
 import Link from 'next/link'
 import Image from 'next/image'
 import imageMembre from '@/public/membres.jpg'
+import { Association, getAssoById } from '@/lib/association/association.service'
+import { useSelector } from 'react-redux'
+import { RootState } from '@/store'
+import { addAssoToFavorites, getUserInfo } from '@/lib/user/user.service'
 
-export default function MonAssociation() {
+interface Props {
+  assoId: number,
+  association: Association
+}
+
+export default function MonAssociation({ assoId, association }: Props) {
+  const connectedUser = useSelector((state: RootState) => state.token)
   const paramPage = useSearchParams()
   const id_asso = paramPage.get('id')
+  const [like, setLike] = useState(false)
+  const [asso, setAsso] = useState<Partial<Association>>({})
 
   // State pour gérer l'onglet actif
   const [activeTab, setActiveTab] = useState('London')
 
+  const getUserInfoHandler = async () => {
+    console.log('getUserInfoHandler is called'); // Debug log 1
+    if (connectedUser.token) {
+      const res = await getUserInfo(connectedUser.token as string)
+      console.log('getUserInfo response:', res); // Debug log 2
+      if (res.data && res.data.userFollowAssociation) {
+        // If the association is in the user userFollowAssociation setLike to true
+        // the association id is
+        if (res.data.userFollowAssociation.find(asso => asso.id === parseInt(id_asso as string))) {
+          console.log('like')
+          setLike(true)
+        } else {
+          console.log('dislike')
+          setLike(false)
+        }
+      }
+    }
+  }
+
+  const getAssoInfoHandler = async () => {
+    // Fetch asso info
+    const res = await getAssoById(parseInt(id_asso as string))
+    if (res.data) {
+      setAsso(res.data)
+    }
+    document.getElementById('defaultOpen')?.click()
+  }
+
   // Affichage seulement de l'onglet actif
   useEffect(() => {
-    document.getElementById('defaultOpen')?.click()
+    // Fetch asso info
+    getAssoInfoHandler().then(() => {
+      console.log('then from ass handler')
+      console.log('token', connectedUser)
+      // getUserInfoHandler().then(() => {})
+    })
   }, [])
 
   // Fonction pour ouvrir un onglet
@@ -39,21 +84,30 @@ export default function MonAssociation() {
     setActiveTab(cityName) // Met à jour l'état de l'onglet actif
   }
 
+  const handleAddToFavorite = async () => {
+    console.log(connectedUser.token + ' ajoute ' + asso.id + ' aux favoris')
+    const res = await addAssoToFavorites(connectedUser.token as string, asso.id as number)
+    if (res === 200) {
+      setLike(!like)
+    }
+  }
+
   return (
     <>
-      {associationliste.map(association =>
-        !id_asso || association.id === parseInt(id_asso) ? (
           <section className="myassociation">
             <div className="container">
               <div className="titreasso">
                 <img
-                  src={association.image}
+                  src={"/next.png"}
                   width={300}
                   height={50}
                   alt=""
                   className="imageasso"
                 />
-                <h2>{association.name}</h2>
+                <h2>{asso.name}</h2>
+                {connectedUser && connectedUser.identity === 'isuser' && (
+                  <button className="btn-asso" onClick={handleAddToFavorite}>{!like ? 'Ajouter aux favoris' : 'Retirer des favoris'}</button>
+                )}
               </div>
 
               <div className="association">
@@ -81,27 +135,24 @@ export default function MonAssociation() {
               <div className="infoasso">
                 <div id="Presentation" className="tabcontent">
                   <h3>Presentation</h3>
-                  <p>{association.description}</p>
+                  <p>{asso.description}</p>
                 </div>
 
                 <div id="Ressources" className="tabcontent">
                   <div className="titre-ressource">
                     <h3>Ressources</h3>
                     <Link
-                      href={`/AjouterRessource?id=${association.id}`}
+                      href={`/AjouterRessource?id=${asso.id}`}
                       className="addRessource"
                     >
-                      <i class="fa-solid fa-plus"></i>
+                      <i className="fa-solid fa-plus"></i>
                     </Link>
                   </div>
 
                   <div className="container carte-asso-ress carte-ress">
                     <div className="row">
-                      {ressourcesliste
-                        .filter(ressource => {
-                          return ressource.associationId == association.id
-                        })
-                        .map(ressource => (
+                      {asso.post &&
+                        asso.post.map(ressource => (
                           <>
                             <div className="col col-xs-12 col-sm-12 col-md-6 col-lg-4">
                               <div className="card">
@@ -112,10 +163,10 @@ export default function MonAssociation() {
                                   >
                                     <div className="image-ressource">
                                       <img
-                                        src={ressource.image}
+                                        src={"/vercel.png"}
                                         width={150}
                                         height={20}
-                                        alt={`${ressource.titre} cover`}
+                                        alt={`${ressource.title} cover`}
                                         className="imageRessource"
                                       />
                                     </div>
@@ -124,25 +175,25 @@ export default function MonAssociation() {
 
                                 <div className="card-body carte-body">
                                   <Link href="Ressource" className="card-text">
-                                    <p>{ressource.titre}</p>
+                                    <p>{ressource.title}</p>
                                   </Link>
                                   <p className="card-info">
                                     {ressource.createdAt ==
                                       ressource.updatedAt && (
-                                      <time dateTime={ressource.createdAt}>
+                                      <time dateTime={ressource.createdAt.toString()}>
                                         Publiée le
                                         {format(
-                                          parseISO(ressource.createdAt),
+                                          parseISO(ressource.createdAt.toString()),
                                           ' dd MM yyyy à HH:mm '
                                         )}
                                       </time>
                                     )}
                                     {ressource.createdAt <
                                       ressource.updatedAt && (
-                                      <time dateTime={ressource.updatedAt}>
+                                      <time dateTime={ressource.updatedAt.toString()}>
                                         Mise à jour le
                                         {format(
-                                          parseISO(ressource.updatedAt),
+                                          parseISO(ressource.updatedAt.toString()),
                                           ' dd MM yyyy à HH:mm '
                                         )}
                                       </time>
@@ -267,8 +318,6 @@ export default function MonAssociation() {
               </div>
             </div>
           </section>
-        ) : null
-      )}
     </>
   )
 }

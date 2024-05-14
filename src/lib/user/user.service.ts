@@ -3,7 +3,7 @@ import axios from 'axios'
 import { API_URL } from '@/lib/helpers/config.env'
 import { ApiResponse } from '@/lib/entities/utils.entity'
 
-export async function getUserInfo(token: string): Promise<User> {
+export async function getUserInfo(token: string): Promise<ApiResponse<UserFromDB>> {
   const config = {
     headers: {
       Authorization: `Bearer ${token}`
@@ -13,14 +13,7 @@ export async function getUserInfo(token: string): Promise<User> {
     API_URL + '/users/whoami',
     config
   )
-  return {
-    id: whoami.data.data.id,
-    firstName: whoami.data.data.firstName,
-    lastName: whoami.data.data.lastName,
-    email: whoami.data.data.email,
-    regionId: whoami.data.data.regionId,
-    userRoleId: whoami.data.data.userRoleId
-  }
+  return whoami.data
 }
 
 export async function updateUser(
@@ -39,5 +32,20 @@ export async function updateUser(
   )
   if (response.data.code == 200) {
     return response.data
+  }
+}
+
+export async function addAssoToFavorites(token: string, assoId: number) {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }
+  const response = await axios.get<ApiResponse<string>>(
+    API_URL + '/users/followAction/' + assoId,
+    config
+  )
+  if (response.data.code == 200) {
+    return response.data.code
   }
 }

@@ -1,10 +1,9 @@
 'use client'
 import { ReactNode, useEffect } from 'react'
-import { Provider } from 'react-redux'
+import { Provider, useDispatch } from 'react-redux'
 import { store } from '@/store/index'
 import { checkAndSetAuthFromCookie } from '@/lib/helpers/cookies'
 import { setToken } from '@/store/tokenSlice'
-import { getUserInfo } from '@/lib/user/user.service'
 
 export default function StoreProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
@@ -14,7 +13,6 @@ export default function StoreProvider({ children }: { children: ReactNode }) {
   const checkIfUserAuthHandler = async () => {
     const data = await checkAndSetAuthFromCookie()
     if (data) {
-      console.log(data)
       store.dispatch(
         setToken({
           token: data.token as string,

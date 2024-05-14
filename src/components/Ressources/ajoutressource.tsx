@@ -38,8 +38,8 @@ export default function AjoutRessource() {
                 <textarea
                   title="description"
                   name="description"
-                  cols="20"
-                  rows="7"
+                  cols={20}
+                  rows={7}
                   className="textarea"
                   required
                 ></textarea>

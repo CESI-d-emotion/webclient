@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '@/store'
 import { resetToken, setToken } from '@/store/tokenSlice'
 import { toast } from 'react-toastify'
+import { getAssoInfo } from '@/lib/association/association.service'
 
 export default function Navbar() {
   const token = useSelector((state: RootState) => state.token)
@@ -41,13 +42,7 @@ export default function Navbar() {
           }
         ])
       } else if (token.identity == 'isassociation') {
-        setMenuUser([
-          {
-            name: ' Mon association',
-            href: '/Association?id=2',
-            icon: 'fa-solid fa-id-card'
-          }
-        ])
+        getAssoInfoHandler()
       }
     } else {
       setMenuUser([
@@ -80,6 +75,19 @@ export default function Navbar() {
       icon: 'fa-solid fa-puzzle-piece'
     }
   ]
+
+  const getAssoInfoHandler = async () => {
+    const res = await getAssoInfo(token.token as string)
+    if (res.data) {
+      setMenuUser([
+        {
+          name: ' Mon association',
+          href: '/Association?id=' + res.data.id,
+          icon: 'fa-solid fa-id-card'
+        }
+      ])
+    }
+  }
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen)

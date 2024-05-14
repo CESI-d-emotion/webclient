@@ -10,11 +10,11 @@ export interface User {
 }
 
 export interface UserFromDB extends User {
-  createdAt: Date
-  updatedAt: Date
-  region: Region
-  userRole: UserRole
-  userFollowAssociation: UserFollowAssociation
+  createdAt: Date | null
+  updatedAt: Date | null
+  region: Region | null
+  userRole: UserRole | null
+  userFollowAssociation: UserFollowAssociation[] | null
 }
 
 export interface UserFollowAssociation {

@@ -1,0 +1,46 @@
+'user client'
+import MonAssociation from '@/components/Associations/monassociation'
+import { useRouter } from 'next/router'
+import { GetStaticPaths, GetStaticProps } from 'next'
+import { Association, getAssoById, getAssociations } from '@/lib/association/association.service'
+import { ParsedUrlQuery } from 'node:querystring'
+
+interface Params extends ParsedUrlQuery {
+  id: string
+}
+
+interface Props {
+  association: Association
+}
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const res = await getAssociations()
+  const paths = res.data.map(asso => ({
+    params: { id: asso.id.toString() }
+  }))
+  console.log('getStaticPaths paths:', paths)
+
+  return { paths, fallback: true }
+}
+
+export const getStaticProps: GetStaticProps<Props, Params> = async ({ params}) => {
+  const res = await getAssoById(parseInt(params!.id))
+  console.log('getStaticProps props:', res.data)
+
+  return { props: { association: res.data as Association } }
+}
+
+export default function Page({association}: Props) {
+  const router = useRouter()
+  const { id } = router.query
+
+  if (router.isFallback) {
+    return <div>Loading...</div>
+  }
+
+  return (
+    <>
+      <MonAssociation assoId={parseInt(id as string)} association={association} />
+    </>
+  )
+}

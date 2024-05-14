@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { User } from '@/lib/entities/user.entity'
+import { User, UserFromDB } from '@/lib/entities/user.entity'
 import { getUserInfo, updateUser } from '@/lib/user/user.service'
 import { RootState } from '@/store'
 import { useSelector } from 'react-redux'
@@ -9,19 +9,23 @@ import { toast } from 'react-toastify'
 
 export default function MonProfil() {
   const token = useSelector((state: RootState) => state.token.token)
-  const [user, setUser] = useState<User>({
+  const [user, setUser] = useState<UserFromDB>({
     id: null,
     firstName: '',
     lastName: '',
     email: '',
     regionId: null,
-    userRoleId: null
+    userRoleId: null,
+    createdAt: null,
+    updatedAt: null,
+    userFollowAssociation: [],
+    userRole: null,
+    region: null
   })
 
   useEffect(() => {
-    getUserInfo(token as string).then(data => {
-      console.log(data)
-      setUser(data)
+    getUserInfo(token as string).then(res => {
+      setUser(res.data)
     })
   }, [token])
 
@@ -102,6 +106,20 @@ export default function MonProfil() {
               </form>
             </div>
           </div>
+        </section>
+
+        <h2 className="container">Associations favories</h2>
+        <p className="container modif">
+          Liste de vos associations favories
+        </p>
+        <section>
+          {user.userFollowAssociation && user.userFollowAssociation.map(asso => {
+            return (
+              <div key={asso.id} className="container">
+                <a href={"/Association?id=" + asso.association.id}>{asso.association.name}</a>
+              </div>
+            )
+          })}
         </section>
 
         <h2 className="container">Supprimer mon compte</h2>
