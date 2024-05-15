@@ -44,3 +44,8 @@ export async function getAssociations() {
   const res = await axios.get<ApiResponse<Association[]>>(API_URL + '/asso')
   return res.data
 }
+
+export async function searchAssociation(filter: {keyword: string, sort: 'asc' | 'desc'}) {
+  const res = await axios.post<ApiResponse<Association[]>>(API_URL + '/asso/search', filter)
+  return res.data
+}

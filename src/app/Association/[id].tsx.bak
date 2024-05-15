@@ -30,7 +30,7 @@ export const getStaticProps: GetStaticProps<Props, Params> = async ({ params}) =
   return { props: { association: res.data as Association } }
 }
 
-export default function Page({association}: Props) {
+export default function IndexTsx({association}: Props) {
   const router = useRouter()
   const { id } = router.query
 

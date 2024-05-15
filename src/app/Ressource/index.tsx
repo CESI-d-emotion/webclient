@@ -1,6 +1,6 @@
 import UneRessource from '@/components/Ressources/uneressource'
 
-export default function Page() {
+export default function Index() {
   return (
     <>
       <UneRessource />

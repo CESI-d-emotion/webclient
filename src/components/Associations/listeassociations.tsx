@@ -1,19 +1,53 @@
 'use client'
 
 import Link from 'next/link'
+import logoMinister from "@/public/logoMinistere.png"
 import { parseISO, format } from 'date-fns'
 import { fr } from 'date-fns/locale'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { associationliste } from '@/donnees/associations'
+import { Association, searchAssociation } from '@/lib/association/association.service'
+import Image from 'next/image'
 
 export default function ListeAssociations() {
-  const [filtreAsso, setFiltreAsso] = useState('') //Variable pour filtre Association
+  const [asso, setAsso] = useState<Association[]>([])
+  const [filtreAsso, setFiltreAsso] = useState<{keyword: string, sort: 'asc' | 'desc'}>({
+    keyword: '',
+    sort: 'asc'
+  }) //Variable pour filtre Association
+  const [inputValue, setInputValue] = useState('')
+  const choix = ['asc', 'desc']
 
-  //Récupération valeur barre de recherche
-  const barreFiltreAsso = e => {
-    let valeur = e.target.value
-    console.log(valeur)
-    setFiltreAsso(valeur)
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault()
+    setInputValue(e.target.value)
+  }
+
+  const handleChangeSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    e.preventDefault()
+    setFiltreAsso({
+      ...filtreAsso,
+      [e.target.name]: e.target.value
+    })
+  }
+
+  useEffect(() => {
+    searchAssoHandler()
+  }, [filtreAsso])
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      setFiltreAsso({
+        ...filtreAsso,
+        keyword: inputValue
+      })
+    }, 500)
+    return () => clearTimeout(timeoutId)
+  }, [inputValue, 500])
+
+  const searchAssoHandler = async () => {
+    const res = await searchAssociation(filtreAsso)
+    setAsso(res.data)
   }
 
   return (
@@ -31,10 +65,12 @@ export default function ListeAssociations() {
               <input
                 type="text"
                 className="form-control barre-recherche"
-                name="search"
+                name="keyword"
                 placeholder="Rechercher..."
-                onChange={barreFiltreAsso}
+                value={inputValue}
+                onChange={handleChange}
               />
+
               <div className="input-group-btn button-recherche">
                 <button className="btn btn-default" type="submit">
                   <i className="fa fa-search"></i> Recherche
@@ -43,14 +79,30 @@ export default function ListeAssociations() {
             </div>
           </form>
         </div>
+
+        <div className="container triage-ressource">
+          <div className="form-group triage">
+            <label htmlFor="tri" className="">
+              Trier&nbsp;par&nbsp;:
+            </label>
+            <select
+              className="form-control barre-recherche barre-triage"
+              id="tri"
+              name="sort"
+              value={filtreAsso.sort}
+              onChange={handleChangeSelect}
+            >
+              {choix.map(yup => {
+                return <option value={yup} key={yup}>{yup === 'asc' ? <i className="fa-solid fa-sort-up">Croissant</i> :
+                  <i className="fa-solid fa-sort-down">Decroissant</i>}</option>
+              })}
+            </select>
+          </div>
+        </div>
+
         <div className="container carte-asso-ress">
           <div className="row">
-            {associationliste
-              .filter(association => {
-                return association.name
-                  .toLowerCase()
-                  .includes(filtreAsso.toLowerCase())
-              })
+            {asso
               .map(association => (
                 <>
                   <div className="col col-xs-12 col-sm-12 col-md-6 col-lg-4">
@@ -59,8 +111,8 @@ export default function ListeAssociations() {
                         <div className="carte">
                           <Link href={`/Association?id=${association.id}`}>
                             <div className="logo-asso">
-                              <img
-                                src={association.image}
+                              <Image
+                                src={logoMinister}
                                 width={150}
                                 height={20}
                                 alt={`${association.name} cover`}
@@ -73,7 +125,7 @@ export default function ListeAssociations() {
                         </div>
                         <div className="card-body carte-body">
                           <p className="card-text">
-                            {association.description.length > 80
+                            {association.description && association.description.length > 80
                               ? `${association.description.slice(0, 80)}...`
                               : association.description}
                           </p>
@@ -87,12 +139,12 @@ export default function ListeAssociations() {
                         <div className="carte-date">
                           {association.createdAt == association.updatedAt && (
                             <time
-                              dateTime={association.createdAt}
+                              dateTime={association.createdAt.toString()}
                               className="date"
                             >
                               Inscription le
                               {format(
-                                parseISO(association.createdAt),
+                                parseISO(association.createdAt.toString()),
                                 ' EEEE d MMM yyyy à HH:mm ',
                                 { locale: fr }
                               )}
@@ -100,12 +152,12 @@ export default function ListeAssociations() {
                           )}
                           {association.createdAt < association.updatedAt && (
                             <time
-                              dateTime={association.updatedAt}
+                              dateTime={association.updatedAt.toString()}
                               className="date"
                             >
                               Mise à jour le
                               {format(
-                                parseISO(association.updatedAt),
+                                parseISO(association.updatedAt.toString()),
                                 ' EEEE d MMM yyyy à HH:mm ',
                                 { locale: fr }
                               )}
