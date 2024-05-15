@@ -2,6 +2,7 @@ import AccueilAssociations from '@/components/Accueil/accueilassociations'
 import AccueilRessources from '@/components/Accueil/accueilressources'
 import AccueilStats from '@/components/Accueil/acceuilstats'
 import Bienvenue from '@/components/Accueil/bienvenue'
+import BienvenueUser from '@/components/Accueil/bienvenueuser'
 
 export default function Page() {
   return (

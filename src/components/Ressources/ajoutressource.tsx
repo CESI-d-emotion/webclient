@@ -38,8 +38,13 @@ export default function AjoutRessource() {
                 <textarea
                   title="description"
                   name="description"
+<<<<<<< Updated upstream
                   cols={20}
                   rows={7}
+=======
+                  cols="20"
+                  rows="7"
+>>>>>>> Stashed changes
                   className="textarea"
                   required
                 ></textarea>

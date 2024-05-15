@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 'use client'
 
 import Link from 'next/link'
@@ -8,6 +9,10 @@ import { Region } from '@/lib/entities/utils.entity'
 import { toast } from 'react-toastify'
 import { setToken } from '@/store/tokenSlice'
 import { associationRegister } from '@/lib/auth/association.auth'
+=======
+import Image from 'next/image'
+import Link from 'next/link'
+>>>>>>> Stashed changes
 
 export default function InscriptionAsso() {
   const dispatch = useDispatch()
@@ -90,10 +95,15 @@ export default function InscriptionAsso() {
                 <input
                   type="text"
                   title="nom"
+<<<<<<< Updated upstream
                   name="name"
                   className="input"
                   value={formState.name}
                   onChange={handleChange}
+=======
+                  name="nom"
+                  className="input"
+>>>>>>> Stashed changes
                   required
                 />
               </div>
@@ -102,10 +112,15 @@ export default function InscriptionAsso() {
                 <input
                   type="text"
                   title="nbcerfa"
+<<<<<<< Updated upstream
                   name="rna"
                   className="input"
                   value={formState.rna}
                   onChange={handleChange}
+=======
+                  name="nbcerfa"
+                  className="input"
+>>>>>>> Stashed changes
                   required
                 />
               </div>
@@ -116,8 +131,11 @@ export default function InscriptionAsso() {
                   title="email"
                   name="email"
                   className="input"
+<<<<<<< Updated upstream
                   value={formState.email}
                   onChange={handleChange}
+=======
+>>>>>>> Stashed changes
                   required
                 />
               </div>
@@ -126,11 +144,17 @@ export default function InscriptionAsso() {
                 <textarea
                   title="description"
                   name="description"
+<<<<<<< Updated upstream
                   cols={20}
                   rows={5}
                   className="textarea"
                   value={formState.description}
                   onChange={handleChangeTextArea}
+=======
+                  cols="20"
+                  rows="5"
+                  className="textarea"
+>>>>>>> Stashed changes
                   required
                 ></textarea>
               </div>
@@ -141,8 +165,11 @@ export default function InscriptionAsso() {
                   title="password"
                   name="password"
                   className="input"
+<<<<<<< Updated upstream
                   value={formState.password}
                   onChange={handleChange}
+=======
+>>>>>>> Stashed changes
                   required
                 />
               </div>
@@ -153,6 +180,7 @@ export default function InscriptionAsso() {
                 <input
                   type="password"
                   title="conf_password"
+<<<<<<< Updated upstream
                   name="passwordConfirmation"
                   className="input"
                   value={formState.passwordConfirmation}
@@ -174,6 +202,12 @@ export default function InscriptionAsso() {
                     </option>
                   ))}
                 </select>
+=======
+                  name="conf_password"
+                  className="input"
+                  required
+                />
+>>>>>>> Stashed changes
               </div>
               <div className="form-group condition">
                 <div className="conditon">

@@ -69,7 +69,7 @@ export default function MonProfil() {
                   <input
                     type="text"
                     title="nom"
-                    name="nom"
+                    name="lastName"
                     className="input"
                     placeholder="Nom"
                     value={user.lastName}
@@ -81,7 +81,7 @@ export default function MonProfil() {
                   <input
                     type="text"
                     title="prenom"
-                    name="prenom"
+                    name="firstName"
                     className="input"
                     placeholder="Prénom"
                     value={user.firstName}

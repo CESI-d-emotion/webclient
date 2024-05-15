@@ -55,6 +55,7 @@ export default function InscriptionUser() {
     const res = await userRegister(formState)
     if (res.data) {
       toast.success('Votre inscription est un succes')
+<<<<<<< Updated upstream
       dispatch(
         setToken({
           token: res.data.token,
@@ -62,6 +63,9 @@ export default function InscriptionUser() {
           role: res.data.role
         })
       )
+=======
+      dispatch(setToken({ token: res.data.token, identity: res.data.identity }))
+>>>>>>> Stashed changes
     }
   }
 
@@ -142,6 +146,7 @@ export default function InscriptionUser() {
                 <label htmlFor="select_region">Region</label>
                 <select
                   name="regionId"
+                  className='select-region'
                   value={formState.regionId}
                   onChange={handleChangeSelect}
                 >

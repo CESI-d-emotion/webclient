@@ -5,11 +5,14 @@ import '@/styles/bootstrap.min.css'
 import '@/styles/globals.css'
 
 import Link from 'next/link'
+<<<<<<< Updated upstream
 import { ChangeEvent, useState } from 'react'
 import { userLogin } from '@/lib/auth/user.auth'
 import { useDispatch } from 'react-redux'
 import { setToken } from '@/store/tokenSlice'
 import { toast } from 'react-toastify'
+=======
+>>>>>>> Stashed changes
 
 export default function ConnecterUser() {
   const dispatch = useDispatch()
@@ -52,7 +55,11 @@ export default function ConnecterUser() {
               Les champs précédés d'une étoile (*) sont obligatoires.
             </p>
 
+<<<<<<< Updated upstream
             <form onSubmit={handleSubmit}>
+=======
+            <form action="" method="post">
+>>>>>>> Stashed changes
               <div className="form-group">
                 <label htmlFor="email">Adresse email *</label>
                 <input
@@ -60,8 +67,11 @@ export default function ConnecterUser() {
                   title="email"
                   name="email"
                   className="input"
+<<<<<<< Updated upstream
                   value={state.email}
                   onChange={handleChange}
+=======
+>>>>>>> Stashed changes
                   required
                 />
               </div>
@@ -72,8 +82,11 @@ export default function ConnecterUser() {
                   title="password"
                   name="password"
                   className="input"
+<<<<<<< Updated upstream
                   value={state.password}
                   onChange={handleChange}
+=======
+>>>>>>> Stashed changes
                   required
                 />
                 <p className="infoform complform">
