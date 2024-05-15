@@ -1,11 +1,7 @@
-<<<<<<< Updated upstream
 'use client'
 import Link from 'next/link'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/store'
-=======
-import Link from 'next/link'
->>>>>>> Stashed changes
 
 export default function Bienvenue() {
   const token = useSelector((state: RootState) => state.token)
@@ -18,7 +14,7 @@ export default function Bienvenue() {
           Santé
         </h1>
 
-        <div className={token.identity ? 'container' : 'container content'}>
+        <div className={token.identity ? 'container content utilisateur' : 'container content'}>
           {token.identity != 'isuser' && (
             <div className="present aos-init aos-animate" data-aos="fade-right">
               <h4>Utilisateur</h4>

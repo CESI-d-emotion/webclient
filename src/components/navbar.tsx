@@ -136,13 +136,7 @@ export default function Navbar() {
               })}
               {token.token && (
                 <li>
-<<<<<<< Updated upstream
-                  <button className="submit-btn" onClick={handleSignoff}>
-                    Deconnexion
-                  </button>
-=======
                   <a className="link-deco" onClick={handleSignoff}><i className="fa-solid fa-user-slash"></i>Deconnexion</a>
->>>>>>> Stashed changes
                 </li>
               )}
             </ul>

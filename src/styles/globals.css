@@ -504,6 +504,22 @@ section {
         padding: 15px 0 25px 0; }
         .myress .association h2:hover {
           text-decoration: underline #f7f7f7; }
+      .btn-asso {
+        text-decoration: none;
+        border-radius: 30px;
+        background-color: #DAE6FD;
+        border: #DAE6FD;
+        color: #666;
+        font-size: 0.8em;
+        cursor: pointer;
+        padding: 5px 15px; }
+        .btn-asso:hover {
+          background-color: var(--bleu-gouv);
+          color: #fff; }
+        .btn-asso:active {
+          background-color: var(--bleu-gouv);
+          color: #fff; }
+        
       
 
 @media screen and (max-width: 990px) {
@@ -966,3 +982,13 @@ section {
       margin: 0 0 15px 0;
       padding: 5px 15px;
       font-size: 0.9em; }
+
+/* Mise en page des associations favorites */
+.favoris-asso {
+  padding-bottom: 30px; }
+  .favoris-asso a {
+    padding-left: 10px;
+    text-decoration: none;
+    color: #212529;
+    font-size: 1.1em;
+    font-weight: 600; }

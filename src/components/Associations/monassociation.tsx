@@ -6,10 +6,10 @@ import { useSearchParams } from 'next/navigation'
 import { associationliste } from '@/donnees/associations'
 import { ressourcesliste } from '@/donnees/ressources'
 import { parseISO, format } from 'date-fns'
+import logoMinistere from "@/public/logoMinistere.png"
 
 import Link from 'next/link'
 import Image from 'next/image'
-import imageMembre from '@/public/membres.jpg'
 import { Association, getAssoById } from '@/lib/association/association.service'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/store'
@@ -97,8 +97,8 @@ export default function MonAssociation({ assoId, association }: Props) {
           <section className="myassociation">
             <div className="container">
               <div className="titreasso">
-                <img
-                  src={"/next.png"}
+                <Image
+                  src={logoMinistere}
                   width={300}
                   height={50}
                   alt=""
@@ -106,7 +106,7 @@ export default function MonAssociation({ assoId, association }: Props) {
                 />
                 <h2>{asso.name}</h2>
                 {connectedUser && connectedUser.identity === 'isuser' && (
-                  <button className="btn-asso" onClick={handleAddToFavorite}>{!like ? 'Ajouter aux favoris' : 'Retirer des favoris'}</button>
+                  <button className="btn-asso" onClick={handleAddToFavorite}><i className="fa-regular fa-star filled"></i> {!like ? 'Ajouter aux favoris' : 'Retirer des favoris'}</button>
                 )}
               </div>
 
@@ -123,12 +123,6 @@ export default function MonAssociation({ assoId, association }: Props) {
                   onClick={event => openCity(event, 'Ressources')}
                 >
                   Ressources
-                </button>
-                <button
-                  className={`tablinks ${activeTab === 'Membres' ? 'active' : ''}`}
-                  onClick={event => openCity(event, 'Membres')}
-                >
-                  Membres
                 </button>
               </div>
 
@@ -162,8 +156,8 @@ export default function MonAssociation({ assoId, association }: Props) {
                                     className="lien-ressource"
                                   >
                                     <div className="image-ressource">
-                                      <img
-                                        src={"/vercel.png"}
+                                      <Image
+                                        src={logoMinistere}
                                         width={150}
                                         height={20}
                                         alt={`${ressource.title} cover`}
@@ -204,114 +198,6 @@ export default function MonAssociation({ assoId, association }: Props) {
                             </div>
                           </>
                         ))}
-                    </div>
-                  </div>
-                </div>
-
-                <div id="Membres" className="tabcontent">
-                  <h3>Membres</h3>
-
-                  <div className="container carte-asso-ress">
-                    <div className="row">
-                      <div className="col col-xs-6 col-sm-6 col-md-6 col-lg-4">
-                        <div className="membre-asso">
-                          <Image
-                            src={imageMembre}
-                            alt="Person"
-                            width="96"
-                            height="96"
-                          />
-                          John Doe
-                        </div>
-                      </div>
-                      <div className="col col-xs-6 col-sm-6 col-md-6 col-lg-4">
-                        <div className="membre-asso">
-                          <Image
-                            src={imageMembre}
-                            alt="Person"
-                            width="96"
-                            height="96"
-                          />
-                          John Doe
-                        </div>
-                      </div>
-                      <div className="col col-xs-6 col-sm-6 col-md-6 col-lg-4">
-                        <div className="membre-asso">
-                          <Image
-                            src={imageMembre}
-                            alt="Person"
-                            width="96"
-                            height="96"
-                          />
-                          John Doe
-                        </div>
-                      </div>
-                      <div className="col col-xs-6 col-sm-6 col-md-6 col-lg-4">
-                        <div className="membre-asso">
-                          <Image
-                            src={imageMembre}
-                            alt="Person"
-                            width="96"
-                            height="96"
-                          />
-                          John Doe
-                        </div>
-                      </div>
-                      <div className="col col-xs-12 col-sm-12 col-md-6 col-lg-4">
-                        <div className="membre-asso">
-                          <Image
-                            src={imageMembre}
-                            alt="Person"
-                            width="96"
-                            height="96"
-                          />
-                          John Doe
-                        </div>
-                      </div>
-                      <div className="col col-xs-12 col-sm-12 col-md-6 col-lg-4">
-                        <div className="membre-asso">
-                          <Image
-                            src={imageMembre}
-                            alt="Person"
-                            width="96"
-                            height="96"
-                          />
-                          John Doe
-                        </div>
-                      </div>
-                      <div className="col col-xs-12 col-sm-12 col-md-6 col-lg-4">
-                        <div className="membre-asso">
-                          <Image
-                            src={imageMembre}
-                            alt="Person"
-                            width="96"
-                            height="96"
-                          />
-                          John Doe
-                        </div>
-                      </div>
-                      <div className="col col-xs-12 col-sm-12 col-md-6 col-lg-4">
-                        <div className="membre-asso">
-                          <Image
-                            src={imageMembre}
-                            alt="Person"
-                            width="96"
-                            height="96"
-                          />
-                          John Doe
-                        </div>
-                      </div>
-                      <div className="col col-xs-12 col-sm-12 col-md-6 col-lg-4">
-                        <div className="membre-asso">
-                          <Image
-                            src={imageMembre}
-                            alt="Person"
-                            width="96"
-                            height="96"
-                          />
-                          John Doe
-                        </div>
-                      </div>
                     </div>
                   </div>
                 </div>
