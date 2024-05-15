@@ -9,6 +9,11 @@ export interface UserRole {
   libelle: string
 }
 
+export interface TypePost {
+  id: number
+  libelle: string
+}
+
 export interface ApiResponse<T> {
   code: number
   data: T

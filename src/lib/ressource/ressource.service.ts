@@ -86,6 +86,23 @@ interface CommentInput {
   attachedToType: string
 }
 
+interface RessourceInput {
+  title: string
+  content: string
+  typePostId: number
+}
+
+export async function createRessource(input: RessourceInput, token: string) {
+  input.typePostId = parseInt(input.typePostId.toString())
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }
+  const res = await axios.post<ApiResponse<string>>(API_URL + '/ressource/createPost', input, config)
+  return res.status
+}
+
 export async function createComment(input: CommentInput, token: string) {
   const config = {
     headers: {

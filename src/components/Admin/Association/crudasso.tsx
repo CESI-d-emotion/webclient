@@ -2,11 +2,12 @@
 
 import CrudAssoUpdate from './crudassoupdate'
 import React, { useState, useEffect } from 'react'
+import { Association, getAssociations } from '@/lib/association/association.service'
 
 export default function CrudAdminAsso() {
-  const [associations, setAssociations] = useState([])
+  const [associations, setAssociations] = useState<Association[]>([])
   const [isLoading, setIsLoadingA] = useState(true)
-  const [updatingAssociationId, setUpdatingAssociationId] = useState(null)
+  const [updatingAssociationId, setUpdatingAssociationId] = useState<number | null>(null)
   const [isPopupOpen, setIsPopupOpenA] = useState(false)
 
   useEffect(() => {
@@ -14,14 +15,9 @@ export default function CrudAdminAsso() {
   }, [])
 
   const fetchAssociations = async () => {
-    try {
-      const response = await fetch('http://localhost:8082/api/asso')
-      const data = await response.json()
-      setAssociations(data.data)
-      setIsLoadingA(false)
-    } catch (error) {
-      console.error('Erreur lors de la récupération des associations:', error)
-    }
+    const res = await getAssociations()
+    setAssociations(res.data)
+    setIsLoadingA(false)
   }
 
   const handleDeleteA = async id => {
@@ -63,9 +59,9 @@ export default function CrudAdminAsso() {
         <div className="crud crud-complet container">
           <div className="titre-partie">
             <h1>Liste des associations</h1>
-            <button type="button" className="add" onClick={handleOpenPopupA}>
-              <i className="fa-solid fa-plus"></i>
-            </button>
+            {/*<button type="button" className="add" onClick={handleOpenPopupA}>*/}
+            {/*  <i className="fa-solid fa-plus"></i>*/}
+            {/*</button>*/}
           </div>
 
           {isPopupOpen && (
@@ -163,10 +159,10 @@ export default function CrudAdminAsso() {
                         onClick={() => setUpdatingAssociationId(association.id)}
                         className="modif"
                       >
-                        <i class="fa-solid fa-pen-to-square"></i>
+                        <i className="fa-solid fa-pen-to-square"></i>
                       </button>
                       <button onClick={() => handleDeleteA(association.id)}>
-                        <i class="fa-solid fa-trash"></i>
+                        <i className="fa-solid fa-trash"></i>
                       </button>
                     </div>
                   </div>

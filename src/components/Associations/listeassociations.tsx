@@ -109,7 +109,7 @@ export default function ListeAssociations() {
                     <div key={association.id}>
                       <div className="card">
                         <div className="carte">
-                          <Link href={`/Association?id=${association.id}`}>
+                          <Link href={`/Association/${association.id}`}>
                             <div className="logo-asso">
                               <Image
                                 src={logoMinister}
@@ -130,7 +130,7 @@ export default function ListeAssociations() {
                               : association.description}
                           </p>
                           <Link
-                            href={`/Association?id=${association.id}`}
+                            href={`/Association/${association.id}`}
                             className="decouvre btn btn-primary"
                           >
                             Découvrez l'association

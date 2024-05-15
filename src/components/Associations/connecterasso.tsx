@@ -1,4 +1,3 @@
-<<<<<<< Updated upstream
 'use client'
 
 import Link from 'next/link'
@@ -7,10 +6,7 @@ import { useState } from 'react'
 import { toast } from 'react-toastify'
 import { setToken } from '@/store/tokenSlice'
 import { associationLogin } from '@/lib/auth/association.auth'
-=======
-import Image from 'next/image'
-import Link from 'next/link'
->>>>>>> Stashed changes
+
 
 export default function ConnectAsso() {
   const dispatch = useDispatch()
@@ -58,11 +54,8 @@ export default function ConnectAsso() {
                   title="email"
                   name="email"
                   className="input"
-<<<<<<< Updated upstream
                   value={state.email}
                   onChange={handleChange}
-=======
->>>>>>> Stashed changes
                   required
                 />
               </div>
@@ -73,11 +66,8 @@ export default function ConnectAsso() {
                   title="password"
                   name="password"
                   className="input"
-<<<<<<< Updated upstream
                   value={state.password}
                   onChange={handleChange}
-=======
->>>>>>> Stashed changes
                   required
                 />
                 <p className="infoform complform">

@@ -39,7 +39,11 @@ export default function MonProfil() {
 
   const handleUpdateSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    const res = await updateUser(token as string, user)
+    const us = await getUserInfo(token as string)
+    if (us === null) {
+      return
+    }
+    const res = await updateUser(token as string, us.data.id as number, user)
     if (res) {
       toast.success("L'utilisateur a ete modifie")
     } else {
@@ -116,7 +120,7 @@ export default function MonProfil() {
           {user.userFollowAssociation && user.userFollowAssociation.map(asso => {
             return (
               <div key={asso.id} className="container">
-                <a href={"/Association?id=" + asso.association.id}>{asso.association.name}</a>
+                <a href={"/Association/" + asso.association.id}>{asso.association.name}</a>
               </div>
             )
           })}

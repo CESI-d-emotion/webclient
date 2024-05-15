@@ -1,32 +1,37 @@
 'use client'
 
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux'
+import { RootState } from '@/store'
+import { getUserInfo, updateUser } from '@/lib/user/user.service'
+import { toast } from 'react-toastify'
 
 export default function CrudUserUpdate({ utilisateur, onUpdate, onClose }) {
+  const connectedUser = useSelector((state: RootState) => state.token)
+
   const [formData, setFormData] = useState({
     firstName: utilisateur.firstName,
     lastName: utilisateur.lastName,
     email: utilisateur.email
   });
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    try {
-      const response = await fetch(`http://localhost:8082/api/user/${user.id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(utilisateur)
-      });
-      const data = await response.json();
-      onUpdate(data); // Met à jour de l'utilisateur dans la liste parente
-    } catch (error) {
-      console.error('Erreur lors de la mise à jour de l\'utilisateur:', error);
+    console.log(utilisateur.id)
+    const us = await getUserInfo(connectedUser.token as string)
+    if (us === null) {
+      return
+    }
+    const res = await updateUser(connectedUser.token as string, utilisateur.id, formData)
+    if (res) {
+      toast.success("L'utilisateur a ete modifie")
+      onClose()
+    } else {
+      toast.error("L'utilisateur n'a pas ete modifie")
     }
   };
 
@@ -42,7 +47,7 @@ export default function CrudUserUpdate({ utilisateur, onUpdate, onClose }) {
                 name="firstName"
                 placeholder="Prénom"
                 className='champ-update'
-                value={utilisateur.firstName}
+                value={formData.firstName}
                 onChange={handleChange}
             />
             <input
@@ -50,7 +55,7 @@ export default function CrudUserUpdate({ utilisateur, onUpdate, onClose }) {
                 name="lastName"
                 placeholder="Nom"
                 className='champ-update'
-                value={utilisateur.lastName}
+                value={formData.lastName}
                 onChange={handleChange}
             />
             <input
@@ -58,7 +63,7 @@ export default function CrudUserUpdate({ utilisateur, onUpdate, onClose }) {
                 name="email"
                 placeholder="Adresse mail"
                 className='champ-update'
-                value={utilisateur.email}
+                value={formData.email}
                 onChange={handleChange}
             />
             <button type="submit" className='button-update'>Enregistrer les modifications</button>

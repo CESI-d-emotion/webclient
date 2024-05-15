@@ -18,6 +18,7 @@ export async function getUserInfo(token: string): Promise<ApiResponse<UserFromDB
 
 export async function updateUser(
   token: string,
+  uid: number,
   user: { firstName: string; lastName: string; email: string }
 ) {
   const config = {
@@ -25,9 +26,14 @@ export async function updateUser(
       Authorization: `Bearer ${token}`
     }
   }
+  const data = {
+    uid,
+    ...user
+  }
+  console.log(data)
   const response = await axios.post<ApiResponse<string>>(
     API_URL + '/users/update',
-    user,
+    data,
     config
   )
   if (response.data.code == 200) {
@@ -47,5 +53,22 @@ export async function addAssoToFavorites(token: string, assoId: number) {
   )
   if (response.data.code == 200) {
     return response.data.code
+  }
+}
+
+export async function getAllUsers() {
+  const res = await axios.get<ApiResponse<UserFromDB[]>>(API_URL + '/users')
+  return res.data
+}
+
+export async function deleteUser(userId: number, token: string) {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }
+  const res = await axios.delete<ApiResponse<string>>(API_URL + '/users/' + userId, config)
+  if (res.data.code == 200) {
+    return res.data.code
   }
 }

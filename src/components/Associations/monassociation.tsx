@@ -1,10 +1,6 @@
 'use client'
 
-import { useState } from 'react'
-import { useEffect } from 'react'
-import { useSearchParams } from 'next/navigation'
-import { associationliste } from '@/donnees/associations'
-import { ressourcesliste } from '@/donnees/ressources'
+import { useEffect, useState } from 'react'
 import { parseISO, format } from 'date-fns'
 
 import Link from 'next/link'
@@ -16,19 +12,19 @@ import { RootState } from '@/store'
 import { addAssoToFavorites, getUserInfo } from '@/lib/user/user.service'
 
 interface Props {
-  assoId: number,
   association: Association
 }
 
-export default function MonAssociation({ assoId, association }: Props) {
+export default function MonAssociation({ association }: Props) {
   const connectedUser = useSelector((state: RootState) => state.token)
-  const paramPage = useSearchParams()
-  const id_asso = paramPage.get('id')
   const [like, setLike] = useState(false)
-  const [asso, setAsso] = useState<Partial<Association>>({})
 
   // State pour gérer l'onglet actif
   const [activeTab, setActiveTab] = useState('London')
+
+  useEffect(() => {
+    document.getElementById('defaultOpen')?.click()
+  }, [])
 
   const getUserInfoHandler = async () => {
     console.log('getUserInfoHandler is called'); // Debug log 1
@@ -49,25 +45,6 @@ export default function MonAssociation({ assoId, association }: Props) {
     }
   }
 
-  const getAssoInfoHandler = async () => {
-    // Fetch asso info
-    const res = await getAssoById(parseInt(id_asso as string))
-    if (res.data) {
-      setAsso(res.data)
-    }
-    document.getElementById('defaultOpen')?.click()
-  }
-
-  // Affichage seulement de l'onglet actif
-  useEffect(() => {
-    // Fetch asso info
-    getAssoInfoHandler().then(() => {
-      console.log('then from ass handler')
-      console.log('token', connectedUser)
-      // getUserInfoHandler().then(() => {})
-    })
-  }, [])
-
   // Fonction pour ouvrir un onglet
   function openCity(event, cityName) {
     var i, tabcontent, tablinks
@@ -85,8 +62,8 @@ export default function MonAssociation({ assoId, association }: Props) {
   }
 
   const handleAddToFavorite = async () => {
-    console.log(connectedUser.token + ' ajoute ' + asso.id + ' aux favoris')
-    const res = await addAssoToFavorites(connectedUser.token as string, asso.id as number)
+    console.log(connectedUser.token + ' ajoute ' + association.id + ' aux favoris')
+    const res = await addAssoToFavorites(connectedUser.token as string, association.id as number)
     if (res === 200) {
       setLike(!like)
     }
@@ -97,14 +74,14 @@ export default function MonAssociation({ assoId, association }: Props) {
           <section className="myassociation">
             <div className="container">
               <div className="titreasso">
-                <img
+                <Image
                   src={"/next.png"}
                   width={300}
                   height={50}
                   alt=""
                   className="imageasso"
                 />
-                <h2>{asso.name}</h2>
+                <h2>{association.name}</h2>
                 {connectedUser && connectedUser.identity === 'isuser' && (
                   <button className="btn-asso" onClick={handleAddToFavorite}>{!like ? 'Ajouter aux favoris' : 'Retirer des favoris'}</button>
                 )}
@@ -124,25 +101,19 @@ export default function MonAssociation({ assoId, association }: Props) {
                 >
                   Ressources
                 </button>
-                <button
-                  className={`tablinks ${activeTab === 'Membres' ? 'active' : ''}`}
-                  onClick={event => openCity(event, 'Membres')}
-                >
-                  Membres
-                </button>
               </div>
 
               <div className="infoasso">
                 <div id="Presentation" className="tabcontent">
                   <h3>Presentation</h3>
-                  <p>{asso.description}</p>
+                  <p>{association.description}</p>
                 </div>
 
                 <div id="Ressources" className="tabcontent">
                   <div className="titre-ressource">
                     <h3>Ressources</h3>
                     <Link
-                      href={`/AjouterRessource?id=${asso.id}`}
+                      href={`/AjouterRessource?id=${association.id}`}
                       className="addRessource"
                     >
                       <i className="fa-solid fa-plus"></i>
@@ -151,18 +122,18 @@ export default function MonAssociation({ assoId, association }: Props) {
 
                   <div className="container carte-asso-ress carte-ress">
                     <div className="row">
-                      {asso.post &&
-                        asso.post.map(ressource => (
+                      {association.post &&
+                        association.post.map(ressource => (
                           <>
                             <div className="col col-xs-12 col-sm-12 col-md-6 col-lg-4">
                               <div className="card">
                                 <div className="carte carte-ressource">
                                   <Link
-                                    href={`/Ressource?id=${ressource.id}`}
+                                    href={`/Ressource/${ressource.id}`}
                                     className="lien-ressource"
                                   >
                                     <div className="image-ressource">
-                                      <img
+                                      <Image
                                         src={"/vercel.png"}
                                         width={150}
                                         height={20}
@@ -174,7 +145,7 @@ export default function MonAssociation({ assoId, association }: Props) {
                                 </div>
 
                                 <div className="card-body carte-body">
-                                  <Link href="Ressource" className="card-text">
+                                  <Link href={`/Ressource/${ressource.id}`} className="card-text">
                                     <p>{ressource.title}</p>
                                   </Link>
                                   <p className="card-info">
@@ -204,114 +175,6 @@ export default function MonAssociation({ assoId, association }: Props) {
                             </div>
                           </>
                         ))}
-                    </div>
-                  </div>
-                </div>
-
-                <div id="Membres" className="tabcontent">
-                  <h3>Membres</h3>
-
-                  <div className="container carte-asso-ress">
-                    <div className="row">
-                      <div className="col col-xs-6 col-sm-6 col-md-6 col-lg-4">
-                        <div className="membre-asso">
-                          <Image
-                            src={imageMembre}
-                            alt="Person"
-                            width="96"
-                            height="96"
-                          />
-                          John Doe
-                        </div>
-                      </div>
-                      <div className="col col-xs-6 col-sm-6 col-md-6 col-lg-4">
-                        <div className="membre-asso">
-                          <Image
-                            src={imageMembre}
-                            alt="Person"
-                            width="96"
-                            height="96"
-                          />
-                          John Doe
-                        </div>
-                      </div>
-                      <div className="col col-xs-6 col-sm-6 col-md-6 col-lg-4">
-                        <div className="membre-asso">
-                          <Image
-                            src={imageMembre}
-                            alt="Person"
-                            width="96"
-                            height="96"
-                          />
-                          John Doe
-                        </div>
-                      </div>
-                      <div className="col col-xs-6 col-sm-6 col-md-6 col-lg-4">
-                        <div className="membre-asso">
-                          <Image
-                            src={imageMembre}
-                            alt="Person"
-                            width="96"
-                            height="96"
-                          />
-                          John Doe
-                        </div>
-                      </div>
-                      <div className="col col-xs-12 col-sm-12 col-md-6 col-lg-4">
-                        <div className="membre-asso">
-                          <Image
-                            src={imageMembre}
-                            alt="Person"
-                            width="96"
-                            height="96"
-                          />
-                          John Doe
-                        </div>
-                      </div>
-                      <div className="col col-xs-12 col-sm-12 col-md-6 col-lg-4">
-                        <div className="membre-asso">
-                          <Image
-                            src={imageMembre}
-                            alt="Person"
-                            width="96"
-                            height="96"
-                          />
-                          John Doe
-                        </div>
-                      </div>
-                      <div className="col col-xs-12 col-sm-12 col-md-6 col-lg-4">
-                        <div className="membre-asso">
-                          <Image
-                            src={imageMembre}
-                            alt="Person"
-                            width="96"
-                            height="96"
-                          />
-                          John Doe
-                        </div>
-                      </div>
-                      <div className="col col-xs-12 col-sm-12 col-md-6 col-lg-4">
-                        <div className="membre-asso">
-                          <Image
-                            src={imageMembre}
-                            alt="Person"
-                            width="96"
-                            height="96"
-                          />
-                          John Doe
-                        </div>
-                      </div>
-                      <div className="col col-xs-12 col-sm-12 col-md-6 col-lg-4">
-                        <div className="membre-asso">
-                          <Image
-                            src={imageMembre}
-                            alt="Person"
-                            width="96"
-                            height="96"
-                          />
-                          John Doe
-                        </div>
-                      </div>
                     </div>
                   </div>
                 </div>

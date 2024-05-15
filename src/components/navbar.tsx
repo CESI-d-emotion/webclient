@@ -82,7 +82,7 @@ export default function Navbar() {
       setMenuUser([
         {
           name: ' Mon association',
-          href: '/Association?id=' + res.data.id,
+          href: '/Association/' + res.data.id,
           icon: 'fa-solid fa-id-card'
         }
       ])
@@ -136,13 +136,12 @@ export default function Navbar() {
               })}
               {token.token && (
                 <li>
-<<<<<<< Updated upstream
-                  <button className="submit-btn" onClick={handleSignoff}>
-                    Deconnexion
-                  </button>
-=======
-                  <a className="link-deco" onClick={handleSignoff}><i className="fa-solid fa-user-slash"></i>Deconnexion</a>
->>>>>>> Stashed changes
+                  <a className="link-deco" onClick={handleSignoff}><i className="fa-solid fa-user-slash"></i> Deconnexion</a>
+                </li>
+              )}
+              {token.role && token.role === 1 && (
+                <li>
+                  <a className="link-deco" href={"/CrudAdmin"}><i className="fa-solid fa-screwdriver-wrench"></i> CRUD Admin</a>
                 </li>
               )}
             </ul>
@@ -201,6 +200,11 @@ export default function Navbar() {
                         <button className="submit-btn" onClick={handleSignoff}>
                           Deconnexion
                         </button>
+                      </li>
+                    )}
+                    {token.role && token.role === 1 && (
+                      <li>
+                        <a className="link-deco" href={"/CrudAdmin"}><i className="fa-solid fa-screwdriver-wrench"></i> CRUD Admin</a>
                       </li>
                     )}
                   </ul>

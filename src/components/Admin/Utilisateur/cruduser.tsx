@@ -6,11 +6,17 @@ import { userRegister } from '@/lib/auth/user.auth'
 import { Region } from '@/lib/entities/utils.entity'
 import { fetchRegion } from '@/lib/utils/utils.service'
 import { toast } from 'react-toastify'
+import { useSelector } from 'react-redux'
+import { RootState } from '@/store'
+import { deleteUser, getAllUsers } from '@/lib/user/user.service'
+import { UserFromDB } from '@/lib/entities/user.entity'
 
 export default function CrudAdminUsers() {
-  const [utilisateurs, setUtilisateurs] = useState([])
+  const connectedUser = useSelector((state: RootState) => state.token)
+
+  const [utilisateurs, setUtilisateurs] = useState<UserFromDB[]>([])
   const [isLoading, setIsLoading] = useState(true)
-  const [updatingUtilisateurId, setUpdatingUtilisateurId] = useState(null)
+  const [updatingUtilisateurId, setUpdatingUtilisateurId] = useState<number | null>(null)
   const [isPopupOpen, setIsPopupOpen] = useState(false)
 
   const [options, setOptions] = useState<Region[]>([])
@@ -28,24 +34,23 @@ export default function CrudAdminUsers() {
   }, [])
 
   const fetchUtilisateurs = async () => {
-    try {
-      const response = await fetch('http://localhost:8082/api/users')
-      const data = await response.json()
-      setUtilisateurs(data.data)
-      setIsLoading(false)
-    } catch (error) {
-      console.error('Erreur lors de la récupération des utilisateurs:', error)
-    }
+    const res = await getAllUsers()
+    setUtilisateurs(res.data)
+    setIsLoading(false)
   }
 
-  const handleDelete = async id => {
-    try {
-      await fetch(`http://localhost:8082/api/users/${id}`, {
-        method: 'DELETE'
-      })
-      setUtilisateurs(utilisateurs.filter(utilisateur => utilisateur.id !== id))
-    } catch (error) {
-      console.error("Erreur lors de la suppression de l'utilisateur:", error)
+  const handleDelete = async (id: number) => {
+    const confirmed = confirm("Etes vous sur de vouloir supprimer cet utilisateur ?")
+    if (confirmed) {
+      const res = await deleteUser(id, connectedUser.token as string)
+      if (res === 200) {
+        toast.success("Utilisateur supprime")
+        fetchUtilisateurs()
+      } else {
+        toast.error("Echec de la suppression")
+      }
+    } else {
+      toast.info("Action annulee")
     }
   }
 
@@ -63,6 +68,7 @@ export default function CrudAdminUsers() {
   }
 
   const handleCloseUpdateForm = () => {
+    fetchUtilisateurs()
     setUpdatingUtilisateurId(null)
   }
 
@@ -116,9 +122,9 @@ export default function CrudAdminUsers() {
         <div className="crud crud-complet container">
           <div className="titre-partie">
             <h1>Liste des utilisateurs</h1>
-            <button type="button" className="add" onClick={handleOpenPopup}>
-              <i className="fa-solid fa-plus"></i>
-            </button>
+            {/*<button type="button" className="add" onClick={handleOpenPopup}>*/}
+            {/*  <i className="fa-solid fa-plus"></i>*/}
+            {/*</button>*/}
           </div>
 
           {isPopupOpen && (
@@ -231,10 +237,10 @@ export default function CrudAdminUsers() {
                         onClick={() => setUpdatingUtilisateurId(utilisateur.id)}
                         className="modif"
                       >
-                        <i class="fa-solid fa-pen-to-square"></i>
+                        <i className="fa-solid fa-pen-to-square"></i>
                       </button>
                       <button onClick={() => handleDelete(utilisateur.id)}>
-                        <i class="fa-solid fa-trash"></i>
+                        <i className="fa-solid fa-trash"></i>
                       </button>
                     </div>
                   </div>

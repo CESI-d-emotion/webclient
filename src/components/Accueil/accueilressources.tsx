@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { parseISO, format } from 'date-fns'
 import { ressourcesliste } from '@/donnees/ressources'
 import { associationliste } from '@/donnees/associations'
+import Image from 'next/image'
 
 export default function AccueilRessources() {
   return (
@@ -19,7 +20,7 @@ export default function AccueilRessources() {
                     <div className="card">
                       <div className="carte carte-ressource">
                         <Link
-                          href={`/Ressource?id=${ressource.id}`}
+                          href={`/Ressource/${ressource.id}`}
                           className="lien-ressource"
                         >
                           <div className="image-ressource">
@@ -62,7 +63,7 @@ export default function AccueilRessources() {
                             return (
                               association.id == ressource.associationId && (
                                 <Link
-                                  href={`/Association?id=${association.id}`}
+                                  href={`/Association/${association.id}`}
                                 >
                                   {' '}
                                   {association.name}

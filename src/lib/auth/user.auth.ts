@@ -33,16 +33,11 @@ interface UserRegisterInput {
   passwordConfirmation: string
   regionId: string | number
 }
-<<<<<<< Updated upstream
+
 export interface AuthResponse {
   token: string
   identity: 'isuser' | 'isassociation'
   role: number
-=======
-interface AuthResponse {
-  token: string
-  identity: 'isuser' | 'isassociation'
->>>>>>> Stashed changes
   message: string
 }
 export async function userRegister(input: UserRegisterInput): Promise<{
@@ -62,12 +57,6 @@ export async function userRegister(input: UserRegisterInput): Promise<{
     API_URL + '/users/signup',
     input
   )
-<<<<<<< Updated upstream
-=======
-  if (res.data && res.data.data && res.data.data.token) {
-    setCookie('auth-token', res.data.data.token, 1)
-    setCookie('auth-identity', res.data.data.identity, 1)
-  }
->>>>>>> Stashed changes
+
   return res.data
 }

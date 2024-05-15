@@ -156,7 +156,7 @@ export default function ListeRessources() {
                           )}
                           par
                             <Link
-                              href={`/Association?id=${ressource.author.id}`}
+                              href={`/Association/${ressource.author.id}`}
                             >
                               {' '}
                               {ressource.author.name}

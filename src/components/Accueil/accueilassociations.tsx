@@ -1,6 +1,7 @@
 import Link from 'next/link'
 
 import { associationliste } from '@/donnees/associations'
+import Image from 'next/image'
 
 export default function AccueilAssociations() {
   return (
@@ -17,7 +18,7 @@ export default function AccueilAssociations() {
                     <div key={association.id}>
                       <div className="card">
                         <div className="carte">
-                          <Link href={`/Association?id=${association.id}`}>
+                          <Link href={`/Association/${association.id}`}>
                             <div className="logo-asso">
                               <img
                                 src={association.image}
