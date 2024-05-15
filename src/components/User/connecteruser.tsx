@@ -11,7 +11,6 @@ import { useDispatch } from 'react-redux'
 import { setToken } from '@/store/tokenSlice'
 import { toast } from 'react-toastify'
 
-
 export default function ConnecterUser() {
   const dispatch = useDispatch()
   const [state, setState] = useState<{ email: string; password: string }>({

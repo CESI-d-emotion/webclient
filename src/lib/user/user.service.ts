@@ -3,7 +3,9 @@ import axios from 'axios'
 import { API_URL } from '@/lib/helpers/config.env'
 import { ApiResponse } from '@/lib/entities/utils.entity'
 
-export async function getUserInfo(token: string): Promise<ApiResponse<UserFromDB>> {
+export async function getUserInfo(
+  token: string
+): Promise<ApiResponse<UserFromDB>> {
   const config = {
     headers: {
       Authorization: `Bearer ${token}`
@@ -67,7 +69,10 @@ export async function deleteUser(userId: number, token: string) {
       Authorization: `Bearer ${token}`
     }
   }
-  const res = await axios.delete<ApiResponse<string>>(API_URL + '/users/' + userId, config)
+  const res = await axios.delete<ApiResponse<string>>(
+    API_URL + '/users/' + userId,
+    config
+  )
   if (res.data.code == 200) {
     return res.data.code
   }

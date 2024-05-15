@@ -26,7 +26,9 @@ interface AssoRegisterInput {
   passwordConfirmation: string
   regionId: string | number
 }
-export async function associationRegister(input: AssoRegisterInput): Promise<ApiResponse<Partial<AuthResponse>>> {
+export async function associationRegister(
+  input: AssoRegisterInput
+): Promise<ApiResponse<Partial<AuthResponse>>> {
   // Verification
   input.regionId = parseInt(input.regionId as string)
 

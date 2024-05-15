@@ -136,12 +136,17 @@ export default function Navbar() {
               })}
               {token.token && (
                 <li>
-                  <a className="link-deco" onClick={handleSignoff}><i className="fa-solid fa-user-slash"></i> Deconnexion</a>
+                  <a className="link-deco" onClick={handleSignoff}>
+                    <i className="fa-solid fa-user-slash"></i> Deconnexion
+                  </a>
                 </li>
               )}
               {token.role && token.role === 1 && (
                 <li>
-                  <a className="link-deco" href={"/CrudAdmin"}><i className="fa-solid fa-screwdriver-wrench"></i> CRUD Admin</a>
+                  <a className="link-deco" href={'/CrudAdmin'}>
+                    <i className="fa-solid fa-screwdriver-wrench"></i> CRUD
+                    Admin
+                  </a>
                 </li>
               )}
             </ul>
@@ -204,7 +209,10 @@ export default function Navbar() {
                     )}
                     {token.role && token.role === 1 && (
                       <li>
-                        <a className="link-deco" href={"/CrudAdmin"}><i className="fa-solid fa-screwdriver-wrench"></i> CRUD Admin</a>
+                        <a className="link-deco" href={'/CrudAdmin'}>
+                          <i className="fa-solid fa-screwdriver-wrench"></i>{' '}
+                          CRUD Admin
+                        </a>
                       </li>
                     )}
                   </ul>

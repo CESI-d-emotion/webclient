@@ -6,7 +6,7 @@ export interface Ressource {
   id: number
   title: string
   content: string
-  createdAt: Date,
+  createdAt: Date
   updatedAt: Date
   typePostId: number
   authorId: number
@@ -65,18 +65,31 @@ export interface FilterRessource {
   regionId?: number
 }
 
-export async function searchRessource(filter: FilterRessource): Promise<ApiResponse<RessourceSearch[]>> {
-  const res = await axios.post<ApiResponse<RessourceSearch[]>>(API_URL + '/ressource/search', filter)
+export async function searchRessource(
+  filter: FilterRessource
+): Promise<ApiResponse<RessourceSearch[]>> {
+  const res = await axios.post<ApiResponse<RessourceSearch[]>>(
+    API_URL + '/ressource/search',
+    filter
+  )
   return res.data
 }
 
-export async function getAllRessources(): Promise<ApiResponse<RessourceById[]>> {
-  const res = await axios.get<ApiResponse<RessourceById[]>>(API_URL + '/ressource')
+export async function getAllRessources(): Promise<
+  ApiResponse<RessourceById[]>
+> {
+  const res = await axios.get<ApiResponse<RessourceById[]>>(
+    API_URL + '/ressource'
+  )
   return res.data
 }
 
-export async function getRessourceById(id: number): Promise<ApiResponse<RessourceById>> {
-  const res = await axios.get<ApiResponse<RessourceById>>(API_URL + '/ressource/' + id)
+export async function getRessourceById(
+  id: number
+): Promise<ApiResponse<RessourceById>> {
+  const res = await axios.get<ApiResponse<RessourceById>>(
+    API_URL + '/ressource/' + id
+  )
   return res.data
 }
 
@@ -99,16 +112,51 @@ export async function createRessource(input: RessourceInput, token: string) {
       Authorization: `Bearer ${token}`
     }
   }
-  const res = await axios.post<ApiResponse<string>>(API_URL + '/ressource/createPost', input, config)
+  const res = await axios.post<ApiResponse<string>>(
+    API_URL + '/ressource/createPost',
+    input,
+    config
+  )
   return res.status
 }
 
 export async function createComment(input: CommentInput, token: string) {
   const config = {
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${token}`
     }
   }
   const res = await axios.post(API_URL + '/comments', input, config)
   return res.status
+}
+
+export async function deleteRessourceById(id: number, token: string) {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }
+  const res = await axios.delete<ApiResponse<string>>(
+    API_URL + '/ressource/' + id,
+    config
+  )
+  return res.status
+}
+
+export async function udpateRessource(
+  token: string,
+  rid: number,
+  input: { title: string; content: string }
+) {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }
+  const res = await axios.post<ApiResponse<RessourceById>>(
+    API_URL + '/ressource/update',
+    { rid, ...input },
+    config
+  )
+  return res.data
 }

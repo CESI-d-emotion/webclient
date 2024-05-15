@@ -10,8 +10,8 @@ type Props = {
   }
 }
 
-export default function Page({params}: Props) {
-  const {id} = params
+export default function Page({ params }: Props) {
+  const { id } = params
   const [association, setAssociation] = useState<Association | null>(null)
 
   const handleAssociationById = async () => {

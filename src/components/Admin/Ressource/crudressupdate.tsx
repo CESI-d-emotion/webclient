@@ -1,34 +1,39 @@
 'use client'
 
 import React, { useState } from 'react'
+import { RootState } from '@/store'
+import { useSelector } from 'react-redux'
+import { toast } from 'react-toastify'
+import { udpateRessource } from '@/lib/ressource/ressource.service'
 
 export default function CrudRessUpdate({ ressource, onUpdate, onClose }) {
+  const connectedUser = useSelector((state: RootState) => state.token)
+
   const [formData, setFormData] = useState({
     title: ressource.title,
     content: ressource.content
   })
 
-  const handleChange = e => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
   }
 
-  const handleSubmit = async e => {
+  const handleChangeTextArea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value })
+  }
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    try {
-      const response = await fetch(
-        `http://localhost:8082/api/ressource/${ressource.id}`,
-        {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(ressource)
-        }
-      )
-      const data = await response.json()
-      onUpdate(data) // Met à jour la ressource dans la liste parente
-    } catch (error) {
-      console.error('Erreur lors de la mise à jour de la ressource:', error)
+    const res = await udpateRessource(
+      connectedUser.token as string,
+      ressource.id,
+      formData
+    )
+    if (res.data && res.code === 200) {
+      toast.success('La ressource a été modifiée')
+      onClose(res)
+    } else {
+      toast.error("La ressource n'a pas été modifiée")
     }
   }
 
@@ -46,18 +51,17 @@ export default function CrudRessUpdate({ ressource, onUpdate, onClose }) {
           name="title"
           placeholder="Titre"
           className="champ-update"
-          value={ressource.title}
+          value={formData.title}
           onChange={handleChange}
         />
         <textarea
-          type="text"
           name="content"
           placeholder="Description"
           className="champ-update"
-          value={ressource.content}
-          onChange={handleChange}
-          cols="3"
-          rows="3"
+          value={formData.content}
+          onChange={handleChangeTextArea}
+          cols={3}
+          rows={3}
           required
         ></textarea>
         <button type="submit" className="button-update">

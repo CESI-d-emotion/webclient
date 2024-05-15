@@ -14,7 +14,13 @@ export default function Bienvenue() {
           Santé
         </h1>
 
-        <div className={token.identity ? 'container content utilisateur' : 'container content'}>
+        <div
+          className={
+            token.identity
+              ? 'container content utilisateur'
+              : 'container content'
+          }
+        >
           {token.identity != 'isuser' && (
             <div className="present aos-init aos-animate" data-aos="fade-right">
               <h4>Utilisateur</h4>

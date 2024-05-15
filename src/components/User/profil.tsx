@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { User, UserFromDB } from '@/lib/entities/user.entity'
 import { getUserInfo, updateUser } from '@/lib/user/user.service'
 import Image from 'next/image'
-import logoMinistere from "@/public/logoMinistere.png"
+import logoMinistere from '@/public/logoMinistere.png'
 import { RootState } from '@/store'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
@@ -115,25 +115,25 @@ export default function MonProfil() {
         </section>
 
         <h2 className="container">Associations favories</h2>
-        <p className="container modif">
-          Liste de vos associations favories
-        </p>
-        <div className='favoris-asso'>
-          {user.userFollowAssociation && user.userFollowAssociation.map(asso => {
-            return (
-              <div key={asso.id} className="container">
-                <a href={"/Association/" + asso.association.id}>
-                  <Image
-                    src={logoMinistere}
-                    width='auto'
-                    height={80}
-                    alt=""
-                    className="imageasso"
-                  />{asso.association.name}
-                </a>
-              </div>
-            )
-          })}
+        <p className="container modif">Liste de vos associations favories</p>
+        <div className="favoris-asso">
+          {user.userFollowAssociation &&
+            user.userFollowAssociation.map(asso => {
+              return (
+                <div key={asso.id} className="container">
+                  <a href={'/Association/' + asso.association.id}>
+                    <Image
+                      src={logoMinistere}
+                      width="auto"
+                      height={80}
+                      alt=""
+                      className="imageasso"
+                    />
+                    {asso.association.name}
+                  </a>
+                </div>
+              )
+            })}
         </div>
 
         <h2 className="container">Supprimer mon compte</h2>

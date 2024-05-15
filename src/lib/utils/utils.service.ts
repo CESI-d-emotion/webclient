@@ -8,6 +8,8 @@ export async function fetchRegion() {
 }
 
 export async function fetchTypePost() {
-  const res = await axios.get<ApiResponse<TypePost[]>>(API_URL + '/utils/typepost')
+  const res = await axios.get<ApiResponse<TypePost[]>>(
+    API_URL + '/utils/typepost'
+  )
   return res.data
 }

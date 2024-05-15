@@ -3,16 +3,24 @@
 import Link from 'next/link'
 
 import { parseISO, format } from 'date-fns'
-import logoMinistere from "@/public/logoMinistere.png"
+import logoMinistere from '@/public/logoMinistere.png'
 import { fr } from 'date-fns/locale'
 import { useEffect, useState } from 'react'
 import { ressourcesliste } from '@/donnees/ressources'
-import { RessourceSearch, searchRessource } from '@/lib/ressource/ressource.service'
+import {
+  RessourceSearch,
+  searchRessource
+} from '@/lib/ressource/ressource.service'
 import Image from 'next/image'
 
 export default function ListeRessources() {
   const [ressources, setRessources] = useState<RessourceSearch[]>([])
-  const [filtreRessource, setFiltreRessource] = useState<{keyword: string, sort: 'asc' | 'desc', regionId?: number, authorId?: number}>({
+  const [filtreRessource, setFiltreRessource] = useState<{
+    keyword: string
+    sort: 'asc' | 'desc'
+    regionId?: number
+    authorId?: number
+  }>({
     keyword: '',
     sort: 'asc'
   }) //Variable pour filtre Association
@@ -56,8 +64,8 @@ export default function ListeRessources() {
       <section className="liste double">
         <h1 className="container">Ressources</h1>
         <p className="container modif">
-          Recherche parmi les {ressources.length} Ressources présentes sur
-          le site.
+          Recherche parmi les {ressources.length} Ressources présentes sur le
+          site.
         </p>
 
         <div className="container">
@@ -93,7 +101,15 @@ export default function ListeRessources() {
               onChange={handleChangeSelect}
             >
               {choix.map(yup => {
-                return <option value={yup} key={yup}>{yup === 'asc' ? <i className="fa-solid fa-sort-up">Croissant</i> : <i className="fa-solid fa-sort-down">Decroissant</i>}</option>
+                return (
+                  <option value={yup} key={yup}>
+                    {yup === 'asc' ? (
+                      <i className="fa-solid fa-sort-up">Croissant</i>
+                    ) : (
+                      <i className="fa-solid fa-sort-down">Decroissant</i>
+                    )}
+                  </option>
+                )
               })}
             </select>
           </div>
@@ -101,72 +117,72 @@ export default function ListeRessources() {
 
         <div className="container carte-asso-ress carte-ress">
           <div className="row">
-            {ressources
-              .map(ressource => (
-                <>
-                  <div className="col col-xs-12 col-sm-12 col-md-6 col-lg-4">
-                    <div className="card">
-                      <div className="carte carte-ressource">
-                        <Link
-                          href={`/Ressource/${ressource.id}`}
-                          className="lien-ressource"
-                        >
-                          <div className="image-ressource">
-                            <Image
-                              src={logoMinistere}
-                              width={150}
-                              height={20}
-                              alt={`${ressource.title} cover`}
-                              className="imageRessource"
-                            />
-                          </div>
-                        </Link>
-                      </div>
+            {ressources.map(ressource => (
+              <>
+                <div className="col col-xs-12 col-sm-12 col-md-6 col-lg-4">
+                  <div className="card">
+                    <div className="carte carte-ressource">
+                      <Link
+                        href={`/Ressource/${ressource.id}`}
+                        className="lien-ressource"
+                      >
+                        <div className="image-ressource">
+                          <Image
+                            src={logoMinistere}
+                            width={150}
+                            height={20}
+                            alt={`${ressource.title} cover`}
+                            className="imageRessource"
+                          />
+                        </div>
+                      </Link>
+                    </div>
 
-                      <div className="card-body carte-body">
-                        <Link href={`/Ressource/${ressource.id}`} className="card-text">
-                          <p>{ressource.title}</p>
+                    <div className="card-body carte-body">
+                      <Link
+                        href={`/Ressource/${ressource.id}`}
+                        className="card-text"
+                      >
+                        <p>{ressource.title}</p>
+                      </Link>
+                      <p className="card-info">
+                        {ressource.createdAt == ressource.updatedAt && (
+                          <time
+                            dateTime={ressource.createdAt.toString()}
+                            className="date"
+                          >
+                            Publiée le
+                            {format(
+                              parseISO(ressource.createdAt.toString()),
+                              ' EEEE d MMM yyyy à HH:mm ',
+                              { locale: fr }
+                            )}
+                          </time>
+                        )}
+                        {ressource.createdAt < ressource.updatedAt && (
+                          <time
+                            dateTime={ressource.updatedAt.toString()}
+                            className="date"
+                          >
+                            Mise à jour le
+                            {format(
+                              parseISO(ressource.updatedAt.toString()),
+                              ' EEEE d MMM yyyy à HH:mm ',
+                              { locale: fr }
+                            )}
+                          </time>
+                        )}
+                        par
+                        <Link href={`/Association/${ressource.author.id}`}>
+                          {' '}
+                          {ressource.author.name}
                         </Link>
-                        <p className="card-info">
-                          {ressource.createdAt == ressource.updatedAt && (
-                            <time
-                              dateTime={ressource.createdAt.toString()}
-                              className="date"
-                            >
-                              Publiée le
-                              {format(
-                                parseISO(ressource.createdAt.toString()),
-                                ' EEEE d MMM yyyy à HH:mm ',
-                                { locale: fr }
-                              )}
-                            </time>
-                          )}
-                          {ressource.createdAt < ressource.updatedAt && (
-                            <time
-                              dateTime={ressource.updatedAt.toString()}
-                              className="date"
-                            >
-                              Mise à jour le
-                              {format(
-                                parseISO(ressource.updatedAt.toString()),
-                                ' EEEE d MMM yyyy à HH:mm ',
-                                { locale: fr }
-                              )}
-                            </time>
-                          )}
-                          par
-                            <Link
-                              href={`/Association/${ressource.author.id}`}
-                            >
-                              {' '}
-                              {ressource.author.name}
-                            </Link>
-                        </p>
-                      </div>
+                      </p>
                     </div>
                   </div>
-                </>
-              ))}
+                </div>
+              </>
+            ))}
           </div>
         </div>
       </section>

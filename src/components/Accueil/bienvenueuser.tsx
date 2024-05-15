@@ -9,7 +9,7 @@ export default function BienvenueUser() {
           Santé
         </h1>
 
-        <div className="container content utilisateur">            
+        <div className="container content utilisateur">
           <div className="present aos-init aos-animate" data-aos="fade-right">
             <h4>Association</h4>
             <p>

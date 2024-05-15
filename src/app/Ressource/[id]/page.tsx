@@ -1,7 +1,10 @@
 // page.tsx
 'use client'
 
-import { getRessourceById, RessourceById } from '@/lib/ressource/ressource.service'
+import {
+  getRessourceById,
+  RessourceById
+} from '@/lib/ressource/ressource.service'
 import { useEffect, useState } from 'react'
 import UneRessource from '@/components/Ressources/uneressource'
 
@@ -11,7 +14,7 @@ type PageProps = {
   }
 }
 
-const Post = ({params}: PageProps) => {
+const Post = ({ params }: PageProps) => {
   const { id } = params
   const [ressource, setRessource] = useState<RessourceById | null>(null)
 
@@ -34,7 +37,7 @@ const Post = ({params}: PageProps) => {
     <>
       <UneRessource ressource={ressource} />
     </>
-  );
-};
+  )
+}
 
-export default Post;
+export default Post

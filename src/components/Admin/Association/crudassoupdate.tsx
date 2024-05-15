@@ -1,34 +1,40 @@
 'use client'
 
 import React, { useState } from 'react'
+import { RootState } from '@/store'
+import { useSelector } from 'react-redux'
+import { toast } from 'react-toastify'
+import { updateAssociation } from '@/lib/association/association.service'
 
 export default function CrudAssoUpdate({ association, onUpdate, onClose }) {
+  const connectedUser = useSelector((state: RootState) => state.token)
+
   const [formData, setFormDataA] = useState({
     name: association.name,
-    email: association.email
+    email: association.email,
+    description: association.description
   })
 
-  const handleChangeA = e => {
+  const handleChangeA = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormDataA({ ...formData, [e.target.name]: e.target.value })
   }
 
-  const handleSubmitA = async e => {
+  const handleChangeATextArea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setFormDataA({ ...formData, [e.target.name]: e.target.value })
+  }
+
+  const handleSubmitA = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    try {
-      const response = await fetch(
-        `http://localhost:8082/api/asso/${association.id}`,
-        {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(association)
-        }
-      )
-      const data = await response.json()
-      onUpdateA(data) // Met à jour la association dans la liste parente
-    } catch (error) {
-      console.error('Erreur lors de la mise à jour de la association:', error)
+    const res = await updateAssociation(
+      connectedUser.token as string,
+      association.id,
+      formData
+    )
+    if (res) {
+      toast.success("L'association a été modifiée")
+      onClose(res)
+    } else {
+      toast.error("L'association n'a pas été modifiée")
     }
   }
 
@@ -46,7 +52,7 @@ export default function CrudAssoUpdate({ association, onUpdate, onClose }) {
           name="name"
           placeholder="Nom"
           className="champ-update"
-          value={association.name}
+          value={formData.name}
           onChange={handleChangeA}
         />
         <input
@@ -54,18 +60,17 @@ export default function CrudAssoUpdate({ association, onUpdate, onClose }) {
           name="email"
           placeholder="Adresse mail"
           className="champ-update"
-          value={association.email}
+          value={formData.email}
           onChange={handleChangeA}
         />
         <textarea
-          type="text"
-          name="content"
+          name="description"
           placeholder="Description"
           className="champ-update"
-          value={association.description}
-          onChange={handleChangeA}
-          cols="2"
-          rows="2"
+          value={formData.description}
+          onChange={handleChangeATextArea}
+          cols={2}
+          rows={2}
           required
         ></textarea>
         <button type="submit" className="button-update">

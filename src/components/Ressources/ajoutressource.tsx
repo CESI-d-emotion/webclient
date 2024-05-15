@@ -57,9 +57,9 @@ export default function AjoutRessource() {
     e.preventDefault()
     const res = await createRessource(input, connectedUser.token as string)
     if (res === 200) {
-      toast.success("Ressource ajoutee avec succes")
+      toast.success('Ressource ajoutee avec succes')
     } else {
-      toast.error("Une erreur est survenue")
+      toast.error('Une erreur est survenue')
     }
   }
 
@@ -89,7 +89,7 @@ export default function AjoutRessource() {
               <div className="form-group">
                 <label htmlFor="select_region">Type de ressource</label>
                 <select
-                  className='select-region'
+                  className="select-region"
                   name="typePostId"
                   value={input.typePostId}
                   onChange={handleChangeSelect}
@@ -97,7 +97,9 @@ export default function AjoutRessource() {
                 >
                   <option value="">Selectionner...</option>
                   {options.map(option => (
-                    <option key={option.id} value={option.id}>{option.libelle}</option>
+                    <option key={option.id} value={option.id}>
+                      {option.libelle}
+                    </option>
                   ))}
                 </select>
               </div>

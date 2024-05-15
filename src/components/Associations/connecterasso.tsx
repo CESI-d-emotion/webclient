@@ -32,7 +32,6 @@ export default function ConnectAsso() {
         })
       )
       toast.success('Bienvenue')
-
     }
   }
 

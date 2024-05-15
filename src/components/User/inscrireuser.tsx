@@ -142,7 +142,7 @@ export default function InscriptionUser() {
                 <label htmlFor="select_region">Region</label>
                 <select
                   name="regionId"
-                  className='select-region'
+                  className="select-region"
                   value={formState.regionId}
                   onChange={handleChangeSelect}
                 >

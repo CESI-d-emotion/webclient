@@ -16,7 +16,9 @@ export default function CrudAdminUsers() {
 
   const [utilisateurs, setUtilisateurs] = useState<UserFromDB[]>([])
   const [isLoading, setIsLoading] = useState(true)
-  const [updatingUtilisateurId, setUpdatingUtilisateurId] = useState<number | null>(null)
+  const [updatingUtilisateurId, setUpdatingUtilisateurId] = useState<
+    number | null
+  >(null)
   const [isPopupOpen, setIsPopupOpen] = useState(false)
 
   const [options, setOptions] = useState<Region[]>([])
@@ -40,17 +42,19 @@ export default function CrudAdminUsers() {
   }
 
   const handleDelete = async (id: number) => {
-    const confirmed = confirm("Etes vous sur de vouloir supprimer cet utilisateur ?")
+    const confirmed = confirm(
+      'Etes vous sur de vouloir supprimer cet utilisateur ?'
+    )
     if (confirmed) {
       const res = await deleteUser(id, connectedUser.token as string)
       if (res === 200) {
-        toast.success("Utilisateur supprime")
+        toast.success('Utilisateur supprimé')
         fetchUtilisateurs()
       } else {
-        toast.error("Echec de la suppression")
+        toast.error('Échec de la suppression')
       }
     } else {
-      toast.info("Action annulee")
+      toast.info('Action annulée')
     }
   }
 
@@ -197,7 +201,7 @@ export default function CrudAdminUsers() {
                   <label htmlFor="select_region">Region</label>
                   <select
                     name="regionId"
-                    className='select-region'
+                    className="select-region"
                     value={formState.regionId}
                     onChange={handleChangeSelect}
                   >
@@ -209,7 +213,9 @@ export default function CrudAdminUsers() {
                     ))}
                   </select>
                 </div>
-                <button type="submit" className="submit-btn">Inscrire l'utilisateur</button>
+                <button type="submit" className="submit-btn">
+                  Inscrire l'utilisateur
+                </button>
               </form>
             </div>
           )}
