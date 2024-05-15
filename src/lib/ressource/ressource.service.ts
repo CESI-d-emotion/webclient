@@ -19,10 +19,10 @@ export interface RessourceSearch extends Ressource {
 }
 
 export interface RessourceById extends RessourceSearch {
-  postComment: PostComment
+  postComment: PostComment[]
 }
 
-interface PostComment {
+export interface PostComment {
   id: number
   content: string
   createdAt: Date
@@ -33,7 +33,13 @@ interface PostComment {
   postId: number
   parentId: number | null
   childComments: PostComment[]
-  user: Author | null
+  user: AuthorUser | null
+}
+
+interface AuthorUser {
+  id: number
+  firstName: string
+  lastName: string
 }
 
 interface Author {
@@ -72,4 +78,20 @@ export async function getAllRessources(): Promise<ApiResponse<RessourceById[]>> 
 export async function getRessourceById(id: number): Promise<ApiResponse<RessourceById>> {
   const res = await axios.get<ApiResponse<RessourceById>>(API_URL + '/ressource/' + id)
   return res.data
+}
+
+interface CommentInput {
+  attachedToId: number | null
+  content: string
+  attachedToType: string
+}
+
+export async function createComment(input: CommentInput, token: string) {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    }
+  }
+  const res = await axios.post(API_URL + '/comments', input, config)
+  return res.status
 }

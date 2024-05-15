@@ -25,7 +25,6 @@ const tokenSlice = createSlice({
         role: number
       }>
     ) {
-      console.log(action.payload)
       state.token = action.payload.token
       state.identity = action.payload.identity
       state.role = action.payload.role
