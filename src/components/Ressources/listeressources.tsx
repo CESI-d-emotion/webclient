@@ -80,7 +80,7 @@ export default function ListeRessources() {
           </form>
         </div>
 
-        {/*<div className="container triage-ressource">
+        <div className="container triage-ressource">
           <div className="form-group triage">
             <label htmlFor="tri" className="">
               Trier&nbsp;par&nbsp;:
@@ -97,7 +97,7 @@ export default function ListeRessources() {
               })}
             </select>
           </div>
-        </div>*/}
+        </div>
 
         <div className="container carte-asso-ress carte-ress">
           <div className="row">

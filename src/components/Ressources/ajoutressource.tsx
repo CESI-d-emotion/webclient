@@ -87,7 +87,9 @@ export default function AjoutRessource() {
                 />
               </div>
               <div className="form-group">
+                <label htmlFor="select_region">Type de ressource</label>
                 <select
+                  className='select-region'
                   name="typePostId"
                   value={input.typePostId}
                   onChange={handleChangeSelect}
