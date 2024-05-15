@@ -55,7 +55,7 @@ export default function ListeAssociations() {
       <section className="liste double">
         <h1 className="container">Associations</h1>
         <p className="container modif">
-          Recherche parmi les {associationliste.length} Associations présentes
+          Recherche parmi les {asso.length} Associations présentes
           sur le site.
         </p>
 

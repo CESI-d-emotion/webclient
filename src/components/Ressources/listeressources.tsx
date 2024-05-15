@@ -56,7 +56,7 @@ export default function ListeRessources() {
       <section className="liste double">
         <h1 className="container">Ressources</h1>
         <p className="container modif">
-          Recherche parmi les {ressourcesliste.length} Ressources présentes sur
+          Recherche parmi les {ressources.length} Ressources présentes sur
           le site.
         </p>
 

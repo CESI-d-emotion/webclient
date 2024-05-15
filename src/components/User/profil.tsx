@@ -3,6 +3,8 @@
 import { useEffect, useState } from 'react'
 import { User, UserFromDB } from '@/lib/entities/user.entity'
 import { getUserInfo, updateUser } from '@/lib/user/user.service'
+import Image from 'next/image'
+import logoMinistere from "@/public/logoMinistere.png"
 import { RootState } from '@/store'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
@@ -116,15 +118,23 @@ export default function MonProfil() {
         <p className="container modif">
           Liste de vos associations favories
         </p>
-        <section>
+        <div className='favoris-asso'>
           {user.userFollowAssociation && user.userFollowAssociation.map(asso => {
             return (
               <div key={asso.id} className="container">
-                <a href={"/Association/" + asso.association.id}>{asso.association.name}</a>
+                <a href={"/Association/" + asso.association.id}>
+                  <Image
+                    src={logoMinistere}
+                    width='auto'
+                    height={80}
+                    alt=""
+                    className="imageasso"
+                  />{asso.association.name}
+                </a>
               </div>
             )
           })}
-        </section>
+        </div>
 
         <h2 className="container">Supprimer mon compte</h2>
         <p className="container modif">

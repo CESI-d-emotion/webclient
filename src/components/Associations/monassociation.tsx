@@ -2,10 +2,10 @@
 
 import { useEffect, useState } from 'react'
 import { parseISO, format } from 'date-fns'
+import logoMinistere from "@/public/logoMinistere.png"
 
 import Link from 'next/link'
 import Image from 'next/image'
-import imageMembre from '@/public/membres.jpg'
 import { Association, getAssoById } from '@/lib/association/association.service'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/store'
@@ -75,7 +75,7 @@ export default function MonAssociation({ association }: Props) {
             <div className="container">
               <div className="titreasso">
                 <Image
-                  src={"/next.png"}
+                  src={logoMinistere}
                   width={300}
                   height={50}
                   alt=""
@@ -83,7 +83,7 @@ export default function MonAssociation({ association }: Props) {
                 />
                 <h2>{association.name}</h2>
                 {connectedUser && connectedUser.identity === 'isuser' && (
-                  <button className="btn-asso" onClick={handleAddToFavorite}>{!like ? 'Ajouter aux favoris' : 'Retirer des favoris'}</button>
+                  <button className="btn-asso" onClick={handleAddToFavorite}><i className="fa-regular fa-star filled"></i> {!like ? 'Ajouter aux favoris' : 'Retirer des favoris'}</button>
                 )}
               </div>
 
@@ -134,7 +134,7 @@ export default function MonAssociation({ association }: Props) {
                                   >
                                     <div className="image-ressource">
                                       <Image
-                                        src={"/vercel.png"}
+                                        src={logoMinistere}
                                         width={150}
                                         height={20}
                                         alt={`${ressource.title} cover`}

@@ -8,6 +8,8 @@ import { Region } from '@/lib/entities/utils.entity'
 import { toast } from 'react-toastify'
 import { setToken } from '@/store/tokenSlice'
 import { associationRegister } from '@/lib/auth/association.auth'
+import Image from 'next/image'
+
 
 export default function InscriptionAsso() {
   const dispatch = useDispatch()
@@ -164,6 +166,7 @@ export default function InscriptionAsso() {
                 <label htmlFor="select_region">Region</label>
                 <select
                   name="regionId"
+                  className='select-region'
                   value={formState.regionId}
                   onChange={handleChangeSelect}
                 >

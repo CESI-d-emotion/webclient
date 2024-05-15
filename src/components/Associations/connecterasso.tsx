@@ -6,7 +6,7 @@ import { useState } from 'react'
 import { toast } from 'react-toastify'
 import { setToken } from '@/store/tokenSlice'
 import { associationLogin } from '@/lib/auth/association.auth'
-
+import Image from 'next/image'
 
 export default function ConnectAsso() {
   const dispatch = useDispatch()
