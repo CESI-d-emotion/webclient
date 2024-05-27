@@ -22,17 +22,17 @@ export default function Footer() {
             </p>
             <ul className="liengouv">
               <li>
-                <Link className="link active" href="/">
+                <Link className="link active" href="https://legifrance.gouv.fr/">
                   legifrance.gouv.fr
                 </Link>
               </li>
               <li>
-                <Link className="link active" href="/">
+                <Link className="link active" href="https://www.info.gouv.fr/">
                   gouvernement.fr
                 </Link>
               </li>
               <li>
-                <Link className="link active" href="/">
+                <Link className="link active" href="https://www.service-public.fr/">
                   service-public.fr
                 </Link>
               </li>
@@ -43,27 +43,27 @@ export default function Footer() {
         <div className="container footer-bottom">
           <ul className="reglement">
             <li>
-              <Link className="link" href="/">
+              <Link className="link" href="https://www.data.gouv.fr/fr/pages/legal/legal-notice">
                 Mentions légales
               </Link>
             </li>
             <li>
-              <Link className="link" href="/">
-                Conditions générales d'utilisation
+              <Link className="link" href="https://www.data.gouv.fr/fr/pages/legal/cgu">
+                Modalités d'utilisation
               </Link>
             </li>
             <li>
-              <Link className="link" href="/">
+              <Link className="link" href="https://www.data.gouv.fr/fr/suivi/">
                 Politique de confidentialité
               </Link>
             </li>
             <li>
-              <Link className="link" href="/">
-                Gestion des cookies
+              <Link className="link" href="https://www.data.gouv.fr/fr/pages/legal/licences">
+                Licences
               </Link>
             </li>
             <li>
-              <Link className="link" href="/">
+              <Link className="link" href="https://www.data.gouv.fr/fr/pages/legal/accessibility">
                 Accessibilité : partiellement conforme
               </Link>
             </li>
