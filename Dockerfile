@@ -9,7 +9,7 @@ RUN rm -rf node_modules
 RUN npm install
 RUN npm install -g next
 
-EXPOSE 8080
+EXPOSE 3000
 
 ENV NEXT_PUBLIC_JWT_SECRET="ouiouilesecret"
 ENV NEXT_PUBLIC_API_URL="http://localhost:8082/api"
