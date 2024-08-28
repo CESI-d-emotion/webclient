@@ -11,7 +11,7 @@ RUN npm install -g next
 
 EXPOSE 3000
 
-ENV NEXT_PUBLIC_JWT_SECRET="ouiouilesecret"
-ENV NEXT_PUBLIC_API_URL="http://localhost:8082/api"
+# ENV NEXT_PUBLIC_JWT_SECRET="ouiouilesecret"
+# ENV NEXT_PUBLIC_API_URL="http://localhost:8082/api"
 
 CMD ["npm", "run", "dev"]
